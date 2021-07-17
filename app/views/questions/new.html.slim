@@ -1,0 +1,9 @@
+= form_with model: question, local: true do |form|
+  .mb-3
+    = form.label :title, class: 'form-label'
+    = form.text_field :title, class: 'form-control'
+  .mb-3
+    = form.label :body, class: 'form-label'
+    = form.text_field :body, class: 'form-control'
+  .mb-3
+    = form.submit class: 'btn btn-outline-primary'
