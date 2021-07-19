@@ -1,3 +1,11 @@
-= questions.inspect
+table
+  thead
+    th title
+    th body
+  tbody
+    - questions.each do |question|
+      tr
+        td =question.title
+        td =question.body
 
 = link_to 'Ask question', new_question_path
