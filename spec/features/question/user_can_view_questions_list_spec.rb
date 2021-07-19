@@ -9,7 +9,6 @@ feature 'User is able to view questions list', %q{
   scenario 'User try to view existed questions list' do
     visit questions_path
 
-    save_and_open_page
     questions.each do |question|
       expect(page).to have_content question.title
     end

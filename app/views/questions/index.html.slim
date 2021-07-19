@@ -3,9 +3,6 @@ table
     th title
     th body
   tbody
-    - questions.each do |question|
-      tr
-        td =question.title
-        td =question.body
+    = render questions
 
 = link_to 'Ask question', new_question_path
