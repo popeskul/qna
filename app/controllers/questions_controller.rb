@@ -4,6 +4,10 @@ class QuestionsController < ApplicationController
   expose :questions, ->{ Question.all }
   expose :question
 
+  def show
+    @answer = question.answers.new
+  end
+
   def create
     @question = Question.new(question_params)
 
