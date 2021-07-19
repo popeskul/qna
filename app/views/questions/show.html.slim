@@ -1,2 +1,4 @@
 = question.title
 = question.body
+- question.answers.each do |a|
+  p answer: #{a.body}, #{a.question.inspect}
