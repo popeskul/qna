@@ -1,21 +1,21 @@
 require 'rails_helper'
+require 'pp'
 
-feature 'User is able to view questions list', %q{
+feature 'User is able to view questions list', %(
   Any user is able to view question list
-} do
+) do
+  given(:user) { create(:user) }
+  given!(:questions) { create_list(:question, 2, author: user) }
 
-  given!(:questions) { create_list(:question, 2) }
+  background { sign_in(user) }
 
   scenario 'User try to view existed questions list' do
-    visit questions_path
-
     questions.each do |question|
       expect(page).to have_content question.title
     end
   end
 
   scenario 'User try to view non-existed questions list' do
-    visit questions_path
     expect(page).to_not have_selector 'question-title'
   end
 end

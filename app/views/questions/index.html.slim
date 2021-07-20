@@ -1,8 +1,9 @@
-table
-  thead
-    th title
-    th body
-  tbody
-    = render questions
+- unless current_user.nil?
+  table
+    thead
+      th title
+      th body
+    tbody
+      = render questions
 
 = link_to 'Ask question', new_question_path
