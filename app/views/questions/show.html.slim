@@ -1,6 +1,8 @@
 = question.title
 = question.body
 
+= link_to 'Delete question', question_path(question), method: :delete
+
 ol
   = render question.answers
 
