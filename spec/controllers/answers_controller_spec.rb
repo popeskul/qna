@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'pp'
 
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }

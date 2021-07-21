@@ -1,7 +1,9 @@
+user = User.create(email: 'test@mail.com', password: '123123')
+
 questions = Question.create([
-  { body: 'What operator begins the function description?', title: 'js' },
-  { body: 'What command is used to create the table?', title: 'ruby' },
-  { body: 'Which tag is used to describe the first level header?', title: 'python' }
+  { body: 'What operator begins the function description?', title: 'js', author: user },
+  { body: 'What command is used to create the table?', title: 'ruby', author: user },
+  { body: 'Which tag is used to describe the first level header?', title: 'python', author: user }
 ])
 
 answers = Answer.create([
