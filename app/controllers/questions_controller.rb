@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
 
-  expose :questions, ->{ current_user&.questions }
+  expose :questions, ->{ Question.all }
   expose :question
 
   def show
@@ -27,9 +27,13 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    question.destroy
-    flash[:notice] = 'Question was successfully deleted'
-    redirect_to questions_path
+    if current_user.author_of?(question)
+      question.destroy
+      flash[:notice] = 'Question was successfully deleted'
+      redirect_to questions_path
+    else
+      redirect_to question
+    end
   end
 
   private
