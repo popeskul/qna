@@ -15,7 +15,7 @@ feature 'User can answer the question', %q{
       visit question_path(question)
 
       input_text = 'body'
-      
+
       fill_in 'Body', with: input_text
       click_on 'Post an answer'
 

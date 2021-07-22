@@ -20,5 +20,13 @@ feature 'User can delete his question' do
       expect(page).to have_no_content question.body
       expect(page).to have_no_content question.title
     end
+
+    scenario "Authenticated user can not delete another''s question" do
+      question = create(:question, author: user1)
+
+      visit question_path(question)
+
+      expect(page).to have_no_content 'Delete question'
+    end
   end
 end
