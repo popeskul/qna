@@ -17,7 +17,7 @@ feature 'User can answer the question', %q{
       fill_in 'Body', with: 'body'
       click_on 'Post an answer'
 
-      expect(page).to have_content 'The question was created successfully.'
+      expect(page).to have_content 'The answer was created successfully.'
     end
 
     scenario 'Authenticated user answer the question with errors' do
