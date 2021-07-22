@@ -6,10 +6,9 @@ feature 'User can delete his question' do
 
   describe 'Authenticated user' do
     background { sign_in(user) }
+    let(:question) { create(:question, author: user) }
 
     scenario 'Authenticated user can delete his question' do
-      question = create(:question, author: user)
-
       visit question_path(question)
 
       expect(page).to have_content question.body
