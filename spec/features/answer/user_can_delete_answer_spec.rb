@@ -11,7 +11,6 @@ feature 'User can delete his answer' do
 
     answer = create(:answer, question: question, author: user)
     visit answer_path(answer)
-    save_and_open_page
 
     click_on 'Delete answer'
 
