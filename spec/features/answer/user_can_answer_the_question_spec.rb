@@ -5,6 +5,7 @@ feature 'User can answer the question', %q{
   form and submit
 } do
   given(:question) { create(:question) }
+  let(:answer_text) { Faker::Lorem.unique.sentence }
   
   describe 'Authenticated user' do
     given(:user) { create(:user) }
@@ -14,13 +15,11 @@ feature 'User can answer the question', %q{
 
       visit question_path(question)
 
-      input_text = 'body'
-
-      fill_in 'Body', with: input_text
+      fill_in 'Body', with: answer_text
       click_on 'Post an answer'
 
       expect(page).to have_content 'The answer was created successfully.'
-      expect(page).to have_content input_text
+      expect(page).to have_content answer_text
     end
 
     scenario 'Authenticated user answer the question with errors' do
@@ -33,10 +32,13 @@ feature 'User can answer the question', %q{
     end
   end
 
-  scenario 'Unauthenticated user tries answer the question' do
-    visit question_path(question)
-    click_on 'Post an answer'
+  describe 'Unauthenticated user' do
+    scenario 'Unauthenticated user tries answer the question with correct body' do
+      visit question_path(question)
+      fill_in 'answer_body', with: answer_text
+      click_on 'Post an answer'
 
-    expect(page).to have_content "Body can't be blank"
+      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    end
   end
 end
