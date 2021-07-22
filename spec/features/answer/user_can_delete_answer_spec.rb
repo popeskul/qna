@@ -10,9 +10,9 @@ feature 'User can delete his answer' do
     sign_in(user)
 
     answer = create(:answer, question: question, author: user)
-    visit answer_path(answer)
+    visit question_path(question)
 
-    click_on 'Delete answer'
+    click_link href: answer_path(answer)
 
     expect(current_path).to eq question_path(question)
     expect(page).to have_content 'Answer was successfully deleted'
@@ -21,7 +21,7 @@ feature 'User can delete his answer' do
   scenario "Authenticated user can not delete another''s answer" do
     sign_in(user1)
 
-    answer = create(:answer, question: question1)
+    answer = create(:answer, question: question)
 
     visit question_path(question1)
 
