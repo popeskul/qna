@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pp'
 
 feature 'User is able to view questions list', %(
   Any user is able to view question list
