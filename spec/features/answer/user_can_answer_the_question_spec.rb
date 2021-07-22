@@ -14,10 +14,13 @@ feature 'User can answer the question', %q{
 
       visit question_path(question)
 
-      fill_in 'Body', with: 'body'
+      input_text = 'body'
+      
+      fill_in 'Body', with: input_text
       click_on 'Post an answer'
 
       expect(page).to have_content 'The answer was created successfully.'
+      expect(page).to have_content input_text
     end
 
     scenario 'Authenticated user answer the question with errors' do
