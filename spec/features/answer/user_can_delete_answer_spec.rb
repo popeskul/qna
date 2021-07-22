@@ -14,7 +14,7 @@ feature 'User can delete his answer' do
       answer = create(:answer, question: question, author: user)
       visit question_path(question)
 
-      expect(page).to have_content question.body
+      expect(page).to have_content answer.body
       click_link href: answer_path(answer)
 
       expect(current_path).to eq question_path(question)
