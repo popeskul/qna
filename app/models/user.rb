@@ -5,8 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :questions, class_name: 'Question'
+  has_many :questions, foreign_key: 'author_id', dependent: :destroy
+  has_many :answers, foreign_key: 'author_id', dependent: :destroy
 
   def author_of?(obj)
-    obj.author.id == self.id
+    obj.author_id == self.id
   end
 end
