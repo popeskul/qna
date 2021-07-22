@@ -9,15 +9,14 @@ feature 'User can delete his answer' do
   scenario 'Authenticated user can delete his answer' do
     sign_in(user)
 
-    answer = create(:answer, question: question)
-
+    answer = create(:answer, question: question, author: user)
     visit answer_path(answer)
+    save_and_open_page
 
     click_on 'Delete answer'
 
     expect(current_path).to eq question_path(question)
     expect(page).to have_content 'Answer was successfully deleted'
-    expect(page).to have_no_content answer.body
   end
 
   scenario "Authenticated user can not delete another''s answer" do
