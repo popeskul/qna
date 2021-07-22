@@ -23,6 +23,7 @@ class AnswersController < ApplicationController
       redirect_to question_path(@answer.question)
     else
       flash[:error] = 'Cannot delete the answer'
+      redirect_to question
     end
   end
 
