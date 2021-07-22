@@ -1,8 +1,8 @@
 require 'rails_helper'
-require 'pp'
 
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
+  let(:user) { create(:user) }
 
   describe 'GET #new' do
     before { get :new, params: { question_id: question.id } }
@@ -14,14 +14,15 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid attributes' do
-      let(:answer) { post :create, params: { question_id: question.id, answer: attributes_for(:answer) } }
+      subject { post :create, params: { question_id: question.id, answer: attributes_for(:answer) } }
+      before { login(user) }
 
-      it 'save a new answer in the database' do
-        expect { answer }.to change(question.answers, :count).by(1)
+      it 'save a new answer' do
+        expect { subject }.to change { question.answers.reload.count }.by(1)
       end
 
       it 'redirects to show' do
-        answer
+        subject
         expect(response).to redirect_to question_path(question)
       end
     end

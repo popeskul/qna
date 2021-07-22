@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = question.answers.new(answer_params)
+    @answer.author = current_user
 
     if @answer.save
       flash[:notice] = 'The answer was created successfully.'
