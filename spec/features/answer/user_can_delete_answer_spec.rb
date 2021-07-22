@@ -34,6 +34,8 @@ feature 'User can delete his answer' do
     scenario "Non-authenticated user can not delete another''s answer" do
       answer = create(:answer, question: question1)
 
+      visit question_path(question)
+
       expect(page).to have_no_link('Delete', href: answer_path(answer))
     end
   end
