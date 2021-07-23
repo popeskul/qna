@@ -51,7 +51,7 @@ RSpec.describe AnswersController, type: :controller do
       before { login(answer.author) }
 
       it 'deletes answer' do
-        expect { delete_answer }.to change(question.answers, :count).by(-1)
+        expect { delete_answer }.to change(Answer, :count).by(-1)
       end
 
       it 'redirects to question show' do
@@ -66,7 +66,7 @@ RSpec.describe AnswersController, type: :controller do
       before { sign_in(user) }
 
       it 'does not delete answer' do
-        expect { delete_answer }.to_not change(question.answers, :count)
+        expect { delete_answer }.to_not change(Answer, :count)
       end
 
       it 'redirects to question#show' do
