@@ -24,10 +24,9 @@ RSpec.describe User, type: :model do
 
     context 'answer' do
       let(:answer) { create(:answer, author: user2, question: question) }
-      let(:users_answer) { create(:answer, author_id: user.id, question: question) }
 
       it 'user is the author of the answer' do
-        expect(user).to be_author_of(users_answer)
+        expect(user2).to be_author_of(answer)
       end
 
       it 'user is not author of the answer' do
