@@ -16,7 +16,8 @@ feature 'User can delete his answer' do
       visit question_path(question)
 
       expect(page).to have_content answer.body
-      find_link('Delete answer', href: answer_path(answer)).click
+
+      within("li#answer-#{answer.id}") { click_on 'Delete answer' }
 
       expect(current_path).to eq question_path(question)
       expect(page).to_not have_content answer.body
