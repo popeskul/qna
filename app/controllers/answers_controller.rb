@@ -22,11 +22,11 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer)
       @answer.destroy
       flash[:notice] = 'Answer was successfully deleted'
-      redirect_to question_path(@answer.question)
     else
       flash[:error] = 'Cannot delete the answer'
-      redirect_to question
     end
+
+    redirect_to @answer.question
   end
 
   private
