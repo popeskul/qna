@@ -6,7 +6,7 @@ feature 'User can delete his answer' do
 
   let(:question) { create(:question, author: user) }
   let(:question1) { create(:question, author: user1) }
-  
+
   let!(:answer) { create(:answer, question: question, author: user) }
 
   context 'Authenticated user' do
@@ -19,6 +19,7 @@ feature 'User can delete his answer' do
       click_link href: answer_path(answer)
 
       expect(current_path).to eq question_path(question)
+      expect(page).to_not have_content answer.body
       expect(page).to have_content 'Answer was successfully deleted'
     end
 
