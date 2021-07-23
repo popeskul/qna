@@ -1,1 +1,9 @@
-= questions.inspect
+- unless questions.empty?
+  table
+    thead
+      th title
+      th body
+    tbody
+      = render questions
+
+= link_to 'Ask question', new_question_path
