@@ -17,7 +17,7 @@ feature 'User can delete his answer' do
 
       expect(page).to have_content answer.body
 
-      within("li#answer-#{answer.id}") { click_on 'Delete answer' }
+      within("tr#answer-#{answer.id}") { click_on 'Delete answer' }
 
       expect(current_path).to eq question_path(question)
       expect(page).to_not have_content answer.body

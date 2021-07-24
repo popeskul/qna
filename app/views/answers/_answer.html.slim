@@ -1,5 +1,7 @@
 - if answer.persisted?
-  li [id="answer-#{answer.id}"]
-    = answer.body
-    - if current_user&.author_of?(question)
-      = link_to 'Delete answer', answer_path(answer), method: :delete
+  tr [id="answer-#{answer.id}"]
+    td
+      = answer.body
+    td
+      - if current_user&.author_of?(question)
+        = link_to 'Delete answer', answer_path(answer), method: :delete, class: 'link-danger'

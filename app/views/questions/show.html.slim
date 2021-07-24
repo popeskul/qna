@@ -1,14 +1,23 @@
-= question.title
-= question.body
+.mb-4
+  .h3 = question.title
+  .h4 = question.body
 
 - if current_user&.author_of?(question)
-  p = link_to 'Delete question', question_path(question), method: :delete
+  .mb-3
+    = link_to 'Delete question', question_path(question), method: :delete, class: 'btn btn-outline-danger'
 
-ol
-  = render question.answers
+table.table.table-sm.table-borderless
+  thead
+    tr
+      th Answer
+      th Action
+  tbody
+    = render question.answers
 
 = form_with model: [question, @answer], local: true do |f|
   = render 'shared/errors', resource: @answer
-  = f.label :body
-  = f.text_field :body
-  = f.submit 'Post an answer' 
+  .mb-3
+    = f.label :body, class: 'form-label'
+    = f.text_field :body, class: 'form-control'
+  .mb-3
+    = f.submit 'Post an answer', class: 'btn btn-primary'
