@@ -1,5 +1,5 @@
 doctype html
-html
+html.h-100
   head
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
     title Qna
@@ -8,10 +8,10 @@ html
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-  body
+  body.d-flex.flex-column.h-100
     = render 'shared/header'
 
-    p.notice= notice
-    p.alert= alert
-    
-    = yield
+    .page-content
+      .container
+        = render 'shared/flash_errors'
+        = yield

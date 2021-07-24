@@ -1,9 +1,10 @@
 - unless questions.empty?
-  table
+  table.table.table-sm.table-borderless
     thead
-      th title
-      th body
+      tr
+        th Title
+        th Action
     tbody
       = render questions
 
-= link_to 'Ask question', new_question_path
+= link_to 'Ask question', new_question_path, class: 'btn btn-primary'
