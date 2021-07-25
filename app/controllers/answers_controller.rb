@@ -1,19 +1,14 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[new]
 
-  expose :question, ->{ Question.find(params[:question_id]) }
+  expose :question, ->{ Question.find(params[:question_id]) if params[:question_id] }
   expose :answer
 
   def create
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
 
-    if @answer.save
-      flash[:notice] = 'The answer was created successfully.'
-      redirect_to question
-    else
-      render 'questions/show'
-    end
+    flash.now[:notice] = 'The answer was created successfully.' if @answer.save
   end
 
   def destroy
@@ -27,6 +22,15 @@ class AnswersController < ApplicationController
     end
 
     redirect_to @answer.question
+  end
+
+  def update
+    if current_user.author_of?(answer)
+      answer.update(answer_params)
+      flash.now[:notice] = 'The answer was updated successfully.'
+    end
+
+    @answer = answer
   end
 
   private
