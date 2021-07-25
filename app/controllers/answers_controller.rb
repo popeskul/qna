@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[new]
+  before_action :authenticate_user!, except: %i[new destroy]
 
   expose :question, ->{ Question.find(params[:question_id]) if params[:question_id] }
   expose :answer
@@ -12,16 +12,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
-
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash[:notice] = 'Answer was successfully deleted'
+    if current_user.author_of?(answer)
+      answer.destroy
+      flash.now[:notice] = 'Answer was successfully deleted'
     else
-      flash[:error] = 'Cannot delete the answer'
+      flash.now[:error] = 'Cannot delete the answer'
     end
-
-    redirect_to @answer.question
   end
 
   def update

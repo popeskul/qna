@@ -12,12 +12,12 @@ feature 'User can delete his answer' do
   context 'Authenticated user' do
     before { sign_in(user) }
 
-    scenario 'Authenticated user can delete his answer' do
+    scenario 'Authenticated user can delete his answer', js: true do
       visit question_path(question)
 
       expect(page).to have_content answer.body
 
-      within("tr#answer-#{answer.id}") { click_on 'Delete answer' }
+      within("#answer-#{answer.id}") { click_on 'Delete answer' }
 
       expect(current_path).to eq question_path(question)
       expect(page).to_not have_content answer.body
