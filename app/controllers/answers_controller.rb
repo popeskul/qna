@@ -29,6 +29,10 @@ class AnswersController < ApplicationController
     @answer = answer
   end
 
+  def set_as_the_best
+    answer.set_the_best_answer if current_user.author_of?(answer.question)
+  end
+
   private
 
   def answer_params

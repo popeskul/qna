@@ -4,8 +4,8 @@
       span.p-2 = answer.body
       - if answer.best?
         p The best answer
-        - if current_user&.author_of?(answer) && !answer.best?
-          p = link_to 'Mark as the best', set_as_the_best_answer_path(answer), method: :post, remote: true
+      - if current_user&.author_of?(answer) && !answer.best?
+        p = link_to 'Mark as the best', set_as_the_best_answer_path(answer), method: :post, remote: true
 
       - if user_signed_in?
         = link_to 'Edit', '', class: 'edit-answer-link btn btn-link', data: { answer_id: answer.id }
