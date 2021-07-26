@@ -31,6 +31,7 @@ class AnswersController < ApplicationController
 
   def set_as_the_best
     answer.set_the_best_answer if current_user.author_of?(answer.question)
+    @question = answer.question
   end
 
   private

@@ -1,0 +1,8 @@
+<% if answer.errors.present? %>
+  <% answer.errors.full_messages.each do |message| %>
+    $('.answer-errors').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $('.flash').html('<%= j render "shared/flash_errors"%>');
+  $('.answers').html('<%= j render @question.answers %>')
+<% end %>
