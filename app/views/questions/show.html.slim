@@ -6,7 +6,7 @@
   .mb-3
     = link_to 'Delete question', question_path(question), method: :delete, class: 'btn btn-outline-danger'
 
-table.table.table-sm.table-borderless
+table.table.table-sm.table-borderless.answers
   thead
     tr
       th Answer
@@ -14,10 +14,13 @@ table.table.table-sm.table-borderless
   tbody
     = render question.answers
 
-= form_with model: [question, @answer], local: true do |f|
-  = render 'shared/errors', resource: @answer
+= form_with model: [question, @answer], local: false, class: 'new-answer' do |f|
+  .answer-errors
+    = render 'shared/errors', resource: @answer
   .mb-3
     = f.label :body, class: 'form-label'
     = f.text_field :body, class: 'form-control'
   .mb-3
     = f.submit 'Post an answer', class: 'btn btn-primary'
+
+= javascript_pack_tag 'utilities/answers.js'

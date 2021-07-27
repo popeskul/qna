@@ -10,19 +10,20 @@ feature 'User can answer the question', %q{
   describe 'Authenticated user' do
     given(:user) { create(:user) }
     
-    scenario 'Authenticated user answer the question' do
+    scenario 'Authenticated user answer the question', js: true do
       sign_in(user)
 
       visit question_path(question)
 
       fill_in 'Body', with: answer_text
+
       click_on 'Post an answer'
 
       expect(page).to have_content 'The answer was created successfully.'
       expect(page).to have_content answer_text
     end
 
-    scenario 'Authenticated user answer the question with errors' do
+    scenario 'Authenticated user answer the question with errors', js: true do
       sign_in(user)
 
       visit question_path(question)

@@ -1,32 +1,37 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[new]
+  before_action :authenticate_user!, except: %i[new destroy]
 
-  expose :question, ->{ Question.find(params[:question_id]) }
+  expose :question, ->{ Question.find(params[:question_id]) if params[:question_id] }
   expose :answer
 
   def create
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
 
-    if @answer.save
-      flash[:notice] = 'The answer was created successfully.'
-      redirect_to question
-    else
-      render 'questions/show'
-    end
+    flash.now[:notice] = 'The answer was created successfully.' if @answer.save
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
-
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash[:notice] = 'Answer was successfully deleted'
+    if current_user.author_of?(answer)
+      answer.destroy
+      flash.now[:notice] = 'Answer was successfully deleted'
     else
-      flash[:error] = 'Cannot delete the answer'
+      flash.now[:error] = 'Cannot delete the answer'
+    end
+  end
+
+  def update
+    if current_user.author_of?(answer)
+      answer.update(answer_params)
+      flash.now[:notice] = 'The answer was updated successfully.'
     end
 
-    redirect_to @answer.question
+    @answer = answer
+  end
+
+  def set_as_the_best
+    answer.set_the_best_answer if current_user.author_of?(answer.question)
+    @question = answer.question
   end
 
   private

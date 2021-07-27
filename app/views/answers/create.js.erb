@@ -1,0 +1,12 @@
+var flash = $('.flash')
+var errors = $('.answer-errors')
+
+<% if @answer.persisted? %>
+  $('.answers').append('<%= j render @answer %>');
+  errors.html('');
+  flash.html('');
+  flash.html('<%= j render "shared/flash_errors"%>');
+  $('.new-answer #answer_body').val('');
+<% else %>
+  errors.html('<%= render 'shared/errors', resource: @answer %>');
+<% end %>

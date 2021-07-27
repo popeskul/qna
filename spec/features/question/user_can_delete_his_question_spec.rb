@@ -9,7 +9,7 @@ feature 'User can delete his question' do
   describe 'Authenticated user' do
     background { sign_in(user) }
 
-    scenario 'Authenticated user can delete his question' do
+    scenario 'Authenticated user can delete his question', js: true do
       visit question_path(question)
 
       expect(page).to have_content question.body
