@@ -15,7 +15,14 @@
         .input-group.mb-3
           = f.label :body, 'Body', class: 'input-group-text'
           = f.text_area :body, class: 'form-control'
+        .input-group.mb-3
+          = f.label :files, class: 'form-label'
+          = f.file_field :files, multiple: true, class: 'form-control'
         .mb-3
         = f.submit 'Save', class: 'btn btn-primary'
+  td
+    - if question.files.attached?
+      - question.files.each do |file|
+        p = link_to file.filename.to_s, url_for(file)
   td
     = question.body
