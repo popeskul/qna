@@ -22,20 +22,33 @@ feature 'Edit an answer', %q{
       visit question_path(question)
     end
 
-    describe 'tries to edit his answer' do
-      scenario 'Author sees Edit link' do
+    describe 'edit with valid data' do
+      scenario 'user sees Edit link' do
         within '.answers' do
           expect(page).to have_link 'Edit'
         end
       end
 
-      scenario 'edits his answer', js: true do
+      scenario 'user edit his answer', js: true do
         click_on 'Edit'
         within '.answers' do
           fill_in 'answer[body]', with: 'edited answer'
           click_on 'Save'
           expect(page).not_to have_content answer.body
           expect(page).to have_content 'edited answer'
+          expect(page).to_not have_selector 'textarea'
+        end
+      end
+
+      scenario 'user edit his answer with the new attached files', js: true do
+        click_on 'Edit'
+        within '.answers' do
+          attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+
+          click_on 'Save'
+
+          expect(page).to have_link 'rails_helper.rb'
+          expect(page).to have_link 'spec_helper.rb'
           expect(page).to_not have_selector 'textarea'
         end
       end
