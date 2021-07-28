@@ -22,7 +22,8 @@
         = f.submit 'Save', class: 'btn btn-primary'
   td
     - if question.files.attached?
+      ul
       - question.files.each do |file|
-        p = link_to file.filename.to_s, url_for(file)
+        = render 'shared/attachments', resource: question
   td
     = question.body

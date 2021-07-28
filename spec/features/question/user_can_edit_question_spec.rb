@@ -38,7 +38,6 @@ feature 'Edit an question', %q{
           fill_in 'Body', with: edit_body
           click_on 'Save'
 
-          # expect(page).not_to have_content question.body
           expect(page).to have_content edit_body
           expect(page).to_not have_selector 'textarea'
         end

@@ -16,5 +16,11 @@ FactoryBot.define do
         create_list(:answer, 2, question: question_with_answers)
       end
     end
+
+    trait :with_files do
+      after :create do |question|
+        question.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"), filename: 'rails_helper.rb')
+      end
+    end
   end
 end
