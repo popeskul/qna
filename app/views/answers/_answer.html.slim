@@ -10,13 +10,13 @@
       - if user_signed_in?
         = link_to 'Edit', '', class: 'edit-answer-link btn btn-link', data: { answer_id: answer.id }
 
-        = form_with(model: answer, remote: true, local: false, html: { id: "edit-answer-#{answer.id}", class: 'edit-answer d-none mt-3' }) do |f|
+        = form_with model: answer, remote: true, local: false, html: { id: "edit-answer-#{answer.id}", class: 'edit-answer d-none mt-3' } do |f|
           .input-group.mb-3
             = f.label :body, 'Answer', class: 'input-group-text'
             = f.text_area :body, class: 'form-control'
           .input-group.mb-3
             = f.label :files, class: 'input-group-text'
-            = f.file_field :files, multiple: true, class: 'form-control'
+            = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
           .mb-3
           = f.submit 'Save', class: 'btn btn-primary'
     td

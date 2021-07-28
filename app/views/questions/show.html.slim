@@ -25,7 +25,7 @@ table.table.table-sm.table-borderless.answers
     = f.text_field :body, class: 'form-control'
   .mb-3
     = f.label :files, class: 'form-label'
-    = f.file_field :files, multiple: true, class: 'form-control'
+    = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
   .mb-3
     = f.submit 'Post an answer', class: 'btn btn-primary'
 
