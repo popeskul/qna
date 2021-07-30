@@ -1,4 +1,4 @@
-= form_with model: question, local: true do |form|
+= form_with model: @question, local: true do |form|
   = render 'shared/errors', resource: @question
 
   .mb-3
@@ -10,5 +10,15 @@
   .mb-3
     = form.label :files, class: 'form-label'
     = form.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
+  .mb-3
+    p Links:
+    p
+      = form.fields_for :links, class: 'form-control' do |link|
+        .mb-3
+          = link.label :name, 'Link name', class: 'form-label'
+          = link.text_field :name, class: 'form-control'
+        .mb-3
+          = link.label :url, class: 'form-label'
+          = link.text_field :url, class: 'form-control'
   .mb-3
     = form.submit 'Ask', class: 'btn btn-outline-primary'
