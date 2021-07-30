@@ -15,7 +15,15 @@
         .input-group.mb-3
           = f.label :body, 'Body', class: 'input-group-text'
           = f.text_area :body, class: 'form-control'
+        .input-group.mb-3
+          = f.label :files, class: 'form-label'
+          = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
         .mb-3
         = f.submit 'Save', class: 'btn btn-primary'
+  td
+    - if question.files.attached?
+      ul
+      - question.files.each do |file|
+        = render 'shared/attachments', resource: question
   td
     = question.body

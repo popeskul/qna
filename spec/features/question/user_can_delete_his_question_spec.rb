@@ -4,12 +4,12 @@ feature 'User can delete his question' do
   let(:user) { create(:user) }
   let(:user1) { create(:user) }
 
-  let(:question) { create(:question, author: user) }
+  let(:question) { create(:question, :with_files, author: user) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated' do
     background { sign_in(user) }
 
-    scenario 'Authenticated user can delete his question', js: true do
+    scenario 'user can delete his question', js: true do
       visit question_path(question)
 
       expect(page).to have_content question.body
@@ -22,7 +22,17 @@ feature 'User can delete his question' do
       expect(page).to have_no_content question.title
     end
 
-    scenario "Authenticated user can not delete another''s question" do
+    scenario 'user can delete attachments', js: true do
+      visit question_path(question)
+
+      expect(page).to have_link question.files[0].filename.to_s
+
+      click_on 'Delete file'
+
+      expect(page).to_not have_link question.files[0].filename.to_s
+    end
+
+    scenario "user can not delete another''s question" do
       question = create(:question, author: user1)
 
       visit question_path(question)
@@ -31,8 +41,8 @@ feature 'User can delete his question' do
     end
   end
 
-  describe 'Non-authenticated user' do
-    scenario "Non-authenticated user can't delete question" do
+  describe 'Non-authenticated' do
+    scenario "user can't delete question" do
       visit question_path(question)
 
       expect(page).to have_no_content('Delete question')

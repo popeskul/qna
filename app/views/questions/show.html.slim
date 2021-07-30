@@ -1,6 +1,8 @@
 .mb-4
   .h3 = question.title
   .h4 = question.body
+  - if question.files.attached?
+    = render 'shared/attachments', resource: question
 
 - if current_user&.author_of?(question)
   .mb-3
@@ -10,6 +12,7 @@ table.table.table-sm.table-borderless.answers
   thead
     tr
       th Answer
+      th Files
       th Action
   tbody
     = render question.answers
@@ -20,6 +23,9 @@ table.table.table-sm.table-borderless.answers
   .mb-3
     = f.label :body, class: 'form-label'
     = f.text_field :body, class: 'form-control'
+  .mb-3
+    = f.label :files, class: 'form-label'
+    = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
   .mb-3
     = f.submit 'Post an answer', class: 'btn btn-primary'
 

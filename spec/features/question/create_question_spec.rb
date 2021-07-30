@@ -16,10 +16,6 @@ feature 'User can create question', %q{
     end
 
     scenario 'Authenticated user asks a question' do
-      visit questions_path
-
-      click_on 'Ask question'
-
       fill_in 'Title', with: 'title title'
       fill_in 'Body', with: 'text text'
       click_on 'Ask'
@@ -29,10 +25,18 @@ feature 'User can create question', %q{
       expect(page).to have_content 'text text'
     end
 
-    scenario 'Authenticated user asks a question with errors' do
-      visit questions_path
+    scenario 'Authenticated asks a question with attached files' do
+      fill_in 'Title', with: 'title title'
+      fill_in 'Body', with: 'text text'
 
-      click_on 'Ask question'
+      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Ask'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario 'Authenticated user asks a question with errors' do
       click_on 'Ask'
 
       expect(page).to have_content "Title can't be blank"

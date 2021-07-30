@@ -8,4 +8,7 @@
     = form.label :body, class: 'form-label'
     = form.text_field :body, class: 'form-control'
   .mb-3
+    = form.label :files, class: 'form-label'
+    = form.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
+  .mb-3
     = form.submit 'Ask', class: 'btn btn-outline-primary'

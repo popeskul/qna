@@ -7,12 +7,12 @@ feature 'User can delete his answer' do
   let(:question) { create(:question, author: user) }
   let(:question1) { create(:question, author: user1) }
 
-  let!(:answer) { create(:answer, question: question, author: user) }
+  let!(:answer) { create(:answer, :with_files, question: question, author: user) }
 
-  context 'Authenticated user' do
+  context 'Authenticated' do
     before { sign_in(user) }
 
-    scenario 'Authenticated user can delete his answer', js: true do
+    scenario 'user can delete his answer', js: true do
       visit question_path(question)
 
       expect(page).to have_content answer.body
@@ -24,15 +24,25 @@ feature 'User can delete his answer' do
       expect(page).to have_content 'Answer was successfully deleted'
     end
 
-    scenario "Authenticated user can not delete another''s answer" do
+    scenario "user can not delete another''s answer" do
       visit question_path(question1)
 
       expect(page).to have_no_link('Delete', href: answer_path(answer))
     end
+
+    scenario 'user delete attachments', js: true do
+      visit question_path(question)
+
+      expect(page).to have_link answer.files[0].filename.to_s
+
+      click_on 'Delete file'
+
+      expect(page).to_not have_link answer.files[0].filename.to_s
+    end
   end
 
-  context 'Non-authenticated user' do
-    scenario "Non-authenticated user can not delete another''s answer" do
+  context 'Non-authenticated' do
+    scenario "user can not delete another''s answer" do
       visit question_path(question)
 
       expect(page).to have_no_link('Delete', href: answer_path(answer))
