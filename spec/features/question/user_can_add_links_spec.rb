@@ -10,6 +10,8 @@ feature 'User can add links to question', "
   given(:url) { 'https://www.google.com/' }
   given(:url2) { 'https://www.youtube.com/' }
 
+  given(:invalid_url) { 'invalid_url' }
+
   describe 'Authenticated' do
     background do
       sign_in(user)
@@ -37,6 +39,15 @@ feature 'User can add links to question', "
 
       expect(page).to have_link link_name, href: url
       expect(page).to have_link link_name2, href: url2
+    end
+
+    scenario 'User tries to add an invalid url address to question', js: true do
+      fill_in 'Link name', with: 'Link name'
+      fill_in 'Url', with: invalid_url
+
+      click_on 'Ask'
+
+      expect(page).to have_content 'Links url must be a valid URL'
     end
   end
 end

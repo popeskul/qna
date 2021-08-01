@@ -9,19 +9,35 @@ feature 'User can add links to answer', "
   given(:question) { create(:question, author: user) }
   given(:gist_url) { 'https://gist.github.com/popeskul/234ed2442767c1b6df545a3433006cc1' }
 
-  scenario 'User add links when asks answer', js: true do
-    sign_in(user)
-    visit question_path(question)
+  given(:invalid_url) { 'invalid_url' }
 
-    fill_in 'Body', with: 'body body body'
+  describe 'Authenticated user with question' do
+    before do
+      sign_in(user)
+      visit question_path(question)
+    end
 
-    fill_in 'Link name', with: 'My gist'
-    fill_in 'Url', with: gist_url
+    scenario 'User add links when asks answer', js: true do
+      fill_in 'Body', with: 'body body body'
 
-    click_on 'Post an answer'
+      fill_in 'Link name', with: 'My gist'
+      fill_in 'Url', with: gist_url
 
-    within '.answer' do
-      expect(page).to have_link 'My gist', href: gist_url
+      click_on 'Post an answer'
+
+      within '.answer' do
+        expect(page).to have_link 'My gist', href: gist_url
+      end
+    end
+
+    scenario 'User tries to add an invalid url address to answer', js: true do
+      fill_in 'Link name', with: 'Link name'
+      fill_in 'Url', with: invalid_url
+
+      click_on 'Post an answer'
+
+      expect(page).to have_content 'Links url must be a valid URL'
     end
   end
+
 end
