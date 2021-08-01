@@ -32,6 +32,8 @@ table.table.table-sm.table-borderless.answers
     = f.label :files, class: 'form-label'
     = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
   .mb-3
+    = render partial: 'shared/link-field', locals: { form: f }
+  .mb-3
     = f.submit 'Post an answer', class: 'btn btn-primary'
 
 = javascript_pack_tag 'utilities/answers.js'

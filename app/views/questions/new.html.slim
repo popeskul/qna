@@ -11,14 +11,6 @@
     = form.label :files, class: 'form-label'
     = form.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
   .mb-3
-    p Links:
-    p
-      = form.fields_for :links, class: 'form-control' do |link|
-        .mb-3
-          = link.label :name, 'Link name', class: 'form-label'
-          = link.text_field :name, class: 'form-control'
-        .mb-3
-          = link.label :url, class: 'form-label'
-          = link.text_field :url, class: 'form-control'
+    = render partial: 'shared/link-field', locals: { form: form }
   .mb-3
     = form.submit 'Ask', class: 'btn btn-outline-primary'
