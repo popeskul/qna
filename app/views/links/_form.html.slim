@@ -1,0 +1,14 @@
+.mb-3
+  p Links:
+= form.fields_for :links do |link|
+  .mb-3.row data-link-id=link.object.id
+    .col
+      .form-floating
+        = link.text_field :name, class: 'form-control'
+        = link.label :name, 'Link name', class: 'form-label'
+    .col
+      .form-floating
+        = link.text_field :url, class: 'form-control'
+        = link.label :url, class: 'form-label'
+.links
+  = link_to_add_association 'Add link', form, :links, partial: 'links/link_fields'

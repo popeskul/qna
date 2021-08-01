@@ -26,7 +26,7 @@
       .links.mb-3
         p Links:
         ul
-          - answer .links.each do |link|
+          - answer.links.each do |link|
             li= link_to link.name, link.url
     td
       - if current_user&.author_of?(answer)

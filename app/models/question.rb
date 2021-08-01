@@ -8,5 +8,5 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  accepts_nested_attributes_for :links, reject_if: :all_blank
+  accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
 end
