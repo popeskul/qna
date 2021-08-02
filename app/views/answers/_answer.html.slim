@@ -18,6 +18,8 @@
             = f.label :files, class: 'input-group-text'
             = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
           .mb-3
+            = render 'links/form', form: f
+          .mb-3
           = f.submit 'Save', class: 'btn btn-primary'
     td
       - if answer.files.attached?
