@@ -8,6 +8,9 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import '@nathanvda/cocoon'
+import GistClient from 'gist-client'
+
+window.gistClient = new GistClient()
 
 Rails.start()
 Turbolinks.start()
