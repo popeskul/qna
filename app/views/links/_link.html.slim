@@ -1,0 +1,5 @@
+-if link.linkable.links
+  li.mb-3.link data-link-id=link.id
+    = link_to link.name, link.url, class: 'btn btn-link m-3'
+    - if current_user&.author_of?(link.linkable)
+      = link_to 'Delete', link_path(link), method: :delete, class:'btn btn-danger', remote: true

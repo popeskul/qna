@@ -8,7 +8,8 @@
     p Links:
     ul
       - question.links.each do |link|
-        li= link_to link.name, link.url
+        = render link
+
 - if current_user&.author_of?(question)
   .mb-3
     = link_to 'Delete question', question_path(question), method: :delete, class: 'btn btn-outline-danger'
