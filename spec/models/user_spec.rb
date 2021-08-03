@@ -1,9 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it { should validate_presence_of :email }
+  describe 'Associations' do
+    it { should have_many(:rewards).dependent(:destroy) }
+  end
 
-  it { should validate_presence_of :password }
+  describe 'Validations' do
+    it { should validate_presence_of :email }
+    it { should validate_presence_of :password }
+  end
 
   describe 'Author_of?' do
     let(:user) { create(:user) }
