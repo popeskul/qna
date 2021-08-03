@@ -1,7 +1,7 @@
 .mb-3
   p Links:
 = form.fields_for :links do |link|
-  .mb-3.row data-link-id=link.object.id
+  .mb-3.row.link data-link-id=link.object.id
     .col
       .form-floating
         = link.text_field :name, class: 'form-control'

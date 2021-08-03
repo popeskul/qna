@@ -1,0 +1,11 @@
+.mb-4
+  legend Reward:
+  .reward
+    = form.fields_for :reward do |r|
+      .row
+        .col
+          = r.label :title, 'Reward title'
+          = r.text_field :title, class: "form-control"
+        .col
+          = r.label :image
+          = r.file_field :image, class: "form-control"

@@ -17,4 +17,5 @@ RSpec.describe Question, type: :model do
   end
 
   it { should accept_nested_attributes_for :links }
+  it { should accept_nested_attributes_for :reward }
 end

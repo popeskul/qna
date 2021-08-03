@@ -1,0 +1,21 @@
+.h4 Rewards:
+
+- if !@rewards.empty?
+  table.table.table-sm.table-borderless
+    thead
+      tr
+        th question
+        th reward
+        th image
+    tbody
+      - !@rewards.empty? do |reward|
+        tr
+          td
+            = "question -#{reward.question.title}"
+          td
+            = "reward -#{reward.title}"
+          td
+            - if reward.image.attached?
+              = image_tag reward.image, height: 'auto', width: 100
+- else
+  p Nothing found
