@@ -1,8 +1,14 @@
 .mb-4
-  .h3 = question.title
-  .h4 = question.body
+  .h3.mb-3 = question.title
+  .h4.mb-3 = question.body
   - if question.files.attached?
     = render 'shared/attachments', resource: question
+
+  .links.mb-3
+    p Links:
+    ul
+      - question.links.each do |link|
+        = render link
 
 - if current_user&.author_of?(question)
   .mb-3
@@ -26,6 +32,8 @@ table.table.table-sm.table-borderless.answers
   .mb-3
     = f.label :files, class: 'form-label'
     = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
+  .mb-3
+    = render 'links/form', form: f
   .mb-3
     = f.submit 'Post an answer', class: 'btn btn-primary'
 

@@ -18,10 +18,18 @@
             = f.label :files, class: 'input-group-text'
             = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
           .mb-3
+            = render 'links/form', form: f
+          .mb-3
           = f.submit 'Save', class: 'btn btn-primary'
     td
       - if answer.files.attached?
         = render 'shared/attachments', resource: answer
+
+      .links.mb-3
+        p Links:
+        ul
+          - answer.links.each do |link|
+            = render link
     td
       - if current_user&.author_of?(answer)
         = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, local: false, class: "link-danger delete-answer"
