@@ -2,6 +2,7 @@ require 'rails_helper'
 
 shared_examples_for 'votable' do
   let(:user)  { create(:user) }
+  let(:user2) { create(:user) }
   let(:model) { create(described_class.to_s.underscore.to_sym, author: user) }
 
   it { should have_many(:votes).dependent(:destroy) }
@@ -38,6 +39,15 @@ shared_examples_for 'votable' do
     it 'user can un vote' do
       model.un_vote(user)
       expect(model.votes).to eq([])
+    end
+  end
+
+  describe '#evaluation' do
+    before { model.vote_up(user) }
+
+    it 'resulting rating (difference between up and down votes)' do
+      model.vote_down(user2)
+      expect(model.evaluation).to eq(0)
     end
   end
 end
