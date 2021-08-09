@@ -6,22 +6,33 @@ module Votable
   end
 
   def vote_up(user)
-    votes.create!(user: user, value: 1) unless exists_user?(user)
+    make_vote(user, 1)
   end
 
   def vote_down(user)
-    votes.create!(user: user, value: -1) unless exists_user?(user)
+    make_vote(user, -1)
   end
 
-  def un_vote(user)
-    votes.destroy_all if exists_user?(user)
+  def evaluation
+    votes.sum(:value)
   end
 
   def exists_user?(user)
     votes.exists?(user: user)
   end
 
-  def evaluation
-    votes.sum(:value)
+  private
+
+  def make_vote(user, value)
+    vote = votes.find_or_initialize_by(user_id: user.id)
+
+    return if vote.not_votable_author
+
+    if vote.need_un_vote?(value)
+      vote.destroy
+    else
+      vote.value = value
+      vote.save
+    end
   end
 end
