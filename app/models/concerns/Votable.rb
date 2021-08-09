@@ -17,6 +17,10 @@ module Votable
     votes.sum(:value)
   end
 
+  def un_vote(user)
+    votes.destroy_all if exists_user?(user)
+  end
+
   def exists_user?(user)
     votes.exists?(user: user)
   end
