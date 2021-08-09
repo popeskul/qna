@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
 
+  include Voted
+
   expose :questions, -> { Question.all }
   expose :question, find: -> { Question.with_attached_files.find(params[:id]) }
 
