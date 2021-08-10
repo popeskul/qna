@@ -16,7 +16,7 @@ shared_examples_for 'votable' do
 
     it 'user un vote on the second attempt' do
       model.vote_up(user)
-      expect(model.evaluation).to eq(0)
+      expect(model.evaluation).to eq(1)
     end
   end
 
@@ -29,7 +29,7 @@ shared_examples_for 'votable' do
 
     it 'user un vote on the second attempt' do
       model.vote_down(user)
-      expect(model.evaluation).to eq(0)
+      expect(model.evaluation).to eq(-1)
     end
   end
 

@@ -13,16 +13,16 @@ module Votable
     make_vote(user, -1)
   end
 
+  def un_vote(user)
+    votes.destroy_all if voted_by?(user)
+  end
+
+  def voted_by?(user)
+    votes.exists?(user: user)
+  end
+
   def evaluation
     votes.sum(:value)
-  end
-
-  def un_vote(user)
-    votes.destroy_all if exists_user?(user)
-  end
-
-  def exists_user?(user)
-    votes.exists?(user: user)
   end
 
   private
@@ -30,13 +30,9 @@ module Votable
   def make_vote(user, value)
     vote = votes.find_or_initialize_by(user_id: user.id)
 
-    return if vote.not_votable_author
+    return if vote.not_votable_author || vote.value == value
 
-    if vote.need_un_vote?(value)
-      vote.destroy
-    else
-      vote.value = value
-      vote.save
-    end
+    vote.value = value
+    vote.save
   end
 end

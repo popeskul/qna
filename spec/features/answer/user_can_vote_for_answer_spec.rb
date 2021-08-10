@@ -65,7 +65,7 @@ feature 'Vote for answer', %(
       end
 
       scenario 'user can change vote', :js do
-        answer2.votes.create(user: user2, value: 1)
+        answer2.votes.create(user: user, value: 1)
         visit question_path(question2)
 
         within '.answer-votes' do
@@ -73,7 +73,19 @@ feature 'Vote for answer', %(
 
           find(:css, '.vote-down').click
 
-          expect(page).to have_content '0'
+          expect(page).to have_content '-1'
+        end
+      end
+
+      scenario 'user can not vote twice', :js do
+        visit question_path(question2)
+
+        within '.answer-votes' do
+
+          find(:css, '.vote-up').click
+          find(:css, '.vote-up').click
+
+          expect(page).to have_content '1'
         end
       end
 
@@ -84,7 +96,7 @@ feature 'Vote for answer', %(
         within '.answer-votes' do
           expect(page).to have_content '1'
 
-          find(:css, '.vote-up').click
+          find(:css, '.un-vote').click
 
           expect(page).to have_content '0'
         end

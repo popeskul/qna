@@ -74,6 +74,19 @@ feature 'Vote for question', %(
         end
       end
 
+      scenario 'user can not vote twice', :js do
+        question2.votes.create(user: user2, value: 1)
+        visit question_path(question2)
+
+        within '.question-votes' do
+          expect(page).to have_content '1'
+
+          find(:css, '.vote-up').click
+
+          expect(page).to have_content '1'
+        end
+      end
+
       scenario 'user can un vote', :js do
         question2.votes.create(user: user, value: 1)
         visit question_path(question2)
@@ -81,7 +94,7 @@ feature 'Vote for question', %(
         within '.question-votes' do
           expect(page).to have_content '1'
 
-          find(:css, '.vote-up').click
+          find(:css, '.un-vote').click
 
           expect(page).to have_content '0'
         end

@@ -3,31 +3,25 @@ module Voted
 
   included do
     before_action :find_votable,     only: %i[vote_up vote_down un_vote]
-    before_action :validate_votable, only: %i[vote_up vote_down]
+    before_action :validate_votable, only: %i[vote_up vote_down un_vote]
   end
 
   def vote_up
-    @votable.vote_up(current_user)
-    success_response
+    success_response if @votable.vote_up(current_user)
   end
 
   def vote_down
-    @votable.vote_down(current_user)
-    success_response
+    success_response if @votable.vote_down(current_user)
   end
 
   def un_vote
-    render error_response('You have already voted earlier') if @votable.exists_user?(@votable)
-
-    @votable.un_vote(current_user)
-    success_response
+    success_response if @votable.un_vote(current_user)
   end
 
   private
 
   def validate_votable
-    render error_response('Author can not vote')            if current_user.author_of?(@votable)
-    render error_response('You have already voted earlier') if @votable.exists_user?(@votable)
+    error_response('Author can not vote') if current_user.author_of?(@votable)
   end
 
   def success_response
@@ -39,7 +33,7 @@ module Voted
   end
 
   def error_response(message)
-    { json: { message: message }, status: :forbidden }
+    render json: { message: message }, status: :forbidden
   end
 
   def find_votable

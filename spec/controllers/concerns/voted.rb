@@ -14,9 +14,15 @@ shared_examples 'voted' do
           expect { subject }.to change(model.votes, :count).by(1)
         end
 
+        it 'can not vote twice' do
+          subject
+          subject
+          expect(model.evaluation).to eq 1
+        end
+
         it 'can un vote' do
           model.votes.create(user: user, value: 1)
-          expect { subject }.to change(model.votes, :count).by(-1)
+          expect { subject }.to change(model.votes, :count).by(0)
         end
       end
 
@@ -51,9 +57,15 @@ shared_examples 'voted' do
           expect { subject }.to change(model.votes, :count).by(1)
         end
 
+        it 'can not vote twice' do
+          subject
+          subject
+          expect(model.evaluation).to eq -1
+        end
+
         it 'can un vote' do
           model.votes.create(user: user, value: -1)
-          expect { subject }.to change(model.votes, :count).by(-1)
+          expect { subject }.to change(model.votes, :count).by(0)
         end
       end
 
