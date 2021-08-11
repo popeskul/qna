@@ -1,4 +1,6 @@
 .mb-4
+  = render 'votes/vote', resource: question
+
   .h3.mb-3 = question.title
   .h4.mb-3 = question.body
   - if question.files.attached?
@@ -38,3 +40,4 @@ table.table.table-sm.table-borderless.answers
     = f.submit 'Post an answer', class: 'btn btn-primary'
 
 = javascript_pack_tag 'utilities/answers.js'
+= javascript_pack_tag 'utilities/votes.js'

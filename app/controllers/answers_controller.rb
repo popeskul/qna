@@ -1,7 +1,9 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[new destroy]
 
-  expose :question, ->{ Question.find(params[:question_id]) if params[:question_id] }
+  include Voted
+
+  expose :question, -> { Question.find(params[:question_id]) if params[:question_id] }
   expose :answer, find: -> { Answer.with_attached_files.find(params[:id]) }
 
   def create

@@ -1,6 +1,8 @@
 - if answer.persisted?
-  = content_tag(:tr, id: "answer-#{answer.id}", class: 'answer',data: {answer_id: answer.id})
+  = content_tag(:tr, id: "answer-#{answer.id}", class: 'answer', data: { answer_id: answer.id })
     td
+      = render 'votes/vote', resource: answer
+
       span.p-2 = answer.body
       - if answer.best?
         p The best answer
