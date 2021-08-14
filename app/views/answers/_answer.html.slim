@@ -9,7 +9,6 @@
       - if current_user&.author_of?(answer) && !answer.best?
         p = link_to 'Mark as the best', set_as_the_best_answer_path(answer), class: 'answer-best', method: :post, remote: true
 
-      - if user_signed_in?
         = link_to 'Edit', '', class: 'edit-answer-link btn btn-link', data: { answer_id: answer.id }
 
         = form_with model: answer, remote: true, local: false, html: { id: "edit-answer-#{answer.id}", class: 'edit-answer d-none mt-3' } do |f|

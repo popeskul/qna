@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[new destroy]
+  after_action :publish_answer, only: %i[create]
 
   include Voted
 
@@ -37,6 +38,18 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+      'answers',
+      ApplicationController.render(
+        partial: 'answers/answer',
+        locals: { answer: @answer, current_user: current_user }
+      )
+    )
+  end
 
   def answer_params
     params.require(:answer).permit(:body, files: [], links_attributes: %i[name url])

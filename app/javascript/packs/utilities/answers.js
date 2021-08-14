@@ -6,3 +6,13 @@ $(document).on('turbolinks:load', function(){
         $('form#edit-answer-' + answerId).removeClass('d-none');
     })
 });
+
+App.cable.subscriptions.create('AnswersChannel', {
+    connected() {
+        return this.perform("follow")
+    },
+    received: (data) => {
+        $('.answers tbody').append(data)
+    }
+});
+
