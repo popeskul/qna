@@ -4,7 +4,7 @@
   .h3.mb-3 = question.title
   .h4.mb-3 = question.body
   - if question.files.attached?
-    = render 'shared/attachments', resource: question
+    = render 'shared/attachments', resource: question, current_user: current_user
 
   .links.mb-3
     p Links:
@@ -23,7 +23,7 @@ table.table.table-sm.table-borderless.answers
       th Files
       th Action
   tbody
-    = render question.answers
+    = render question.answers, current_user: current_user
 
 = form_with model: [question, @answer], local: false, class: 'new-answer' do |f|
   .answer-errors

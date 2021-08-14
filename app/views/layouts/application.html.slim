@@ -5,9 +5,12 @@ html.h-100
     title Qna
     meta content="width=device-width,initial-scale=1" name="viewport" /
     = csrf_meta_tags
+    = Gon::Base.render_data
+    = action_cable_meta_tag
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+
   body.d-flex.flex-column.h-100
     = render 'shared/header'
 

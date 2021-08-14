@@ -6,3 +6,10 @@ $(document).on('turbolinks:load', function(){
         $('form#edit-question-' + question_id).removeClass('d-none');
     })
 });
+
+App.cable.subscriptions.create('QuestionsChannel', {
+    connected() {
+        return this.perform("follow")
+    },
+    received: (data) => $('.questions .table tbody').append(data)
+});
