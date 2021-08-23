@@ -1,43 +1,60 @@
-.mb-4
-  = render 'votes/vote', resource: question
+.question
+  .mb-4
+    = render 'votes/vote', resource: question
 
-  .h3.mb-3 = question.title
-  .h4.mb-3 = question.body
-  - if question.files.attached?
-    = render 'shared/attachments', resource: question, current_user: current_user
+    .h3.mb-3 = question.title
+    .h4.mb-3 = question.body
+    - if question.files.attached?
+      = render 'shared/attachments', resource: question, current_user: current_user
 
-  .links.mb-3
-    p Links:
-    ul
-      - question.links.each do |link|
-        = render link
+    .links.mb-3
+      p Links:
+      ul
+        - question.links.each do |link|
+          = render link, current_user: current_user
 
-- if current_user&.author_of?(question)
-  .mb-3
-    = link_to 'Delete question', question_path(question), method: :delete, class: 'btn btn-outline-danger'
-
-table.table.table-sm.table-borderless.answers
-  thead
-    tr
-      th Answer
-      th Files
-      th Action
-  tbody
-    = render question.answers, current_user: current_user
-
-= form_with model: [question, @answer], local: false, class: 'new-answer' do |f|
   .answer-errors
     = render 'shared/errors', resource: @answer
-  .mb-3
-    = f.label :body, class: 'form-label'
-    = f.text_field :body, class: 'form-control'
-  .mb-3
-    = f.label :files, class: 'form-label'
-    = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
-  .mb-3
-    = render 'links/form', form: f
-  .mb-3
-    = f.submit 'Post an answer', class: 'btn btn-primary'
+
+  .comment_errors
+    = render 'shared/errors', resource: @comment
+  .question-comments
+    | Question Comments:
+    .question-comments-list
+      = render question.comments
+    = render 'comments/form', commentable: question
+
+    - if current_user
+      .mb-3
+        = link_to 'Add comment', '', class: 'button-question-comment btn btn-info', data: { question_id: question.id }
+
+  - if current_user&.author_of?(question)
+    .mb-3
+      = link_to 'Delete question', question_path(question), method: :delete, class: 'btn btn-outline-danger'
+
+  table.table.table-sm.table-borderless.answers
+    thead
+      tr
+        th Answer
+        th Files
+        th Action
+    tbody
+      = render question.answers, current_user: current_user
+
+  = form_with model: [question, @answer], local: false, class: 'new-answer' do |f|
+    .answer-errors
+      = render 'shared/errors', resource: @answer
+    .mb-3
+      = f.label :body, class: 'form-label'
+      = f.text_field :body, class: 'form-control'
+    .mb-3
+      = f.label :files, class: 'form-label'
+      = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
+    .mb-3
+      = render 'links/form', form: f
+    .mb-3
+      = f.submit 'Post an answer', class: 'btn btn-primary'
 
 = javascript_pack_tag 'utilities/answers.js'
+= javascript_pack_tag 'utilities/questions.js'
 = javascript_pack_tag 'utilities/votes.js'

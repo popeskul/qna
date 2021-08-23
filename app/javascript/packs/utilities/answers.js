@@ -1,9 +1,18 @@
 $(document).on('turbolinks:load', function(){
-    $('.answers').on('click', '.edit-answer-link', function(e) {
+    const answer = $('.answers');
+
+    answer.on('click', '.edit-answer-link', function(e) {
         e.preventDefault();
         $(this).hide();
-        var answerId = $(this).data('answerId');
+        const answerId = $(this).data('answerId');
         $('form#edit-answer-' + answerId).removeClass('d-none');
+    });
+
+    answer.on('click', '.button-answer-comment', function(e) {
+        e.preventDefault();
+        $(this).addClass('d-none');
+        const answerId = $(this).data('answerId');
+        $('form#Add-Answer-Comment-' + answerId ).removeClass('d-none');
     })
 });
 

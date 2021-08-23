@@ -22,6 +22,15 @@
             = render 'links/form', form: f
           .mb-3
           = f.submit 'Save', class: 'btn btn-primary'
+
+      .answer-comments.mb-4
+        | Answer Comments:
+        .answer-comments-list
+          = render answer.comments
+        = render 'comments/form', commentable: answer
+
+        - if current_user
+          = link_to 'Add comment', '', class: 'button-answer-comment btn btn-info', data: { answer_id: answer.id }
     td
       - if answer.files.attached?
         = render 'shared/attachments', resource: answer, current_user: current_user

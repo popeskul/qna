@@ -3,7 +3,9 @@ class CommentsController < ApplicationController
   before_action :set_commentable, only: :create
 
   def create
-    @comment = @commentable.comments.create(comment_params.merge(user: current_user))
+    @comment = @commentable.comments.new(comment_params.merge(user: current_user))
+
+    flash.now[:notice] = 'The comment was created successfully.' if @comment.save
   end
 
   private

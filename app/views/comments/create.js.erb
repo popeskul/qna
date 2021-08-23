@@ -1,0 +1,15 @@
+$('.comment_errors').html('<%= render 'shared/errors', resource: @comment %>');
+
+<% if @comment.commentable_type == 'Question' %>
+  const find_question_comments = $('.question-comments')
+  find_question_comments.find('.question-comments-list').append('<%= j render @comment %>');
+  find_question_comments.find('textarea').val('');
+  $("form#Add-Question-Comment-<%= @comment.commentable.id %>").addClass('d-none');
+  $('.button-question-comment').removeClass('d-none');
+<% else %>
+  const find_answer_comments = $('.answer-comments')
+  find_answer_comments.find('.answer-comments-list').append('<%= j render @comment %>');
+  find_answer_comments.find('textarea').val('');
+  $("form#Add-Answer-Comment-<%= @comment.commentable.id %>").addClass('d-none');
+  $('.button-answer-comment').removeClass('d-none');
+<% end %>
