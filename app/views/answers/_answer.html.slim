@@ -25,7 +25,7 @@
 
       .answer-comments.mb-4
         | Answer Comments:
-        .answer-comments-list
+        .answer-comments-list data-answer-comments-list=answer.id
           = render answer.comments
         = render 'comments/form', commentable: answer
 
