@@ -16,7 +16,7 @@ $(document).on('turbolinks:load', function(){
     })
 });
 
-App.cable.subscriptions.create('AnswersChannel', {
+App.cable.subscriptions.create({ channel: "AnswersChannel", question_id: gon.question_id }, {
     connected() {
         return this.perform("follow")
     },
