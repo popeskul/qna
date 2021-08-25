@@ -43,11 +43,10 @@ class AnswersController < ApplicationController
     return if @answer.errors.any?
 
     ActionCable.server.broadcast(
-      "questions/#{params[:question_id]}/answers",
-      ApplicationController.render(
-        partial: 'answers/answer',
-        locals: { answer: @answer, current_user: current_user }
-      )
+      "questions/#{params[:question_id]}/answers", {
+        partial: ApplicationController.render(partial: 'answers/answer', locals: { answer: @answer, current_user: current_user }),
+        answer: @answer
+      }
     )
   end
 

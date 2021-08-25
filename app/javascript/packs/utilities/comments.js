@@ -7,9 +7,9 @@ App.cable.subscriptions.create({ channel: "CommentsChannel", question_id: gon.qu
         const id = data.comment.commentable_id;
 
         if (type === 'question') {
-            $('.question-comments-list').append(data['partial']);
+            $('.question-comments-list').append(data.partial);
         } else {
-            $(`.answer-comments-list[data-answer-comments-list=${id}]`).append(data['partial']);
+            $(`.answer-comments-list[data-answer-comments-list=${id}]`).append(data.partial);
         }
 
         $('.new-comment #comment_body').val('');

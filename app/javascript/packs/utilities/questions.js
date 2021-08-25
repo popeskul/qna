@@ -20,5 +20,5 @@ App.cable.subscriptions.create('QuestionsChannel', {
     connected() {
         return this.perform("follow")
     },
-    received: (data) => $('.questions tbody').append(data)
+    received: (data) => $('.questions tbody').append(data.partial)
 });

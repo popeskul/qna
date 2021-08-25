@@ -58,11 +58,13 @@ class QuestionsController < ApplicationController
     return if @question.errors.any?
 
     ActionCable.server.broadcast(
-      'questions',
-      ApplicationController.render(
-        partial: 'questions/question',
-        locals: { question: @question, current_user: current_user }
-      )
+      'questions', {
+        partial: ApplicationController.render(
+          partial: 'questions/question',
+          locals: { question: @question, current_user: current_user }
+        ),
+        question: @question
+      }
     )
   end
 

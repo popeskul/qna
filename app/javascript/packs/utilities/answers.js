@@ -20,8 +20,6 @@ App.cable.subscriptions.create({ channel: "AnswersChannel", question_id: gon.que
     connected() {
         return this.perform("follow")
     },
-    received: (data) => {
-        $('.answers tbody').append(data)
-    }
+    received: (data) => $('.answers tbody').append(data.partial)
 });
 
