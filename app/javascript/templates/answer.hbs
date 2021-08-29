@@ -1,0 +1,42 @@
+<tr id="answer-{{answer.id}}" class="answer" data-answer-id="{{answer.id}}">
+  <td>
+    <div class="btn-group btn-group-sm votes answer-votes">
+      <a data-type="json" class="btn btn-success btn-vote vote-up" data-remote="true" rel="nofollow" data-method="patch" href="/answers/{{answer.id}}/vote_up">vote +</a>
+      <a data-type="json" class="btn btn-danger btn-vote vote-down" data-remote="true" rel="nofollow" data-method="patch" href="/answers/{{answer.id}}/vote_down">vote -</a>
+      <a data-type="json" class="btn btn-info btn-vote un-vote" data-remote="true" rel="nofollow" data-method="delete" href="/answers/{{answer.id}}/un_vote">un vote</a>
+      <div class="btn btn-outline-primary vote-result" data-vote-id="answer-{{answer.id}}">0</div>
+    </div>
+
+    <span class="p-2">{{answer.body}}</span>
+
+    <p>
+      <a class="answer-best" data-remote="true" rel="nofollow" data-method="post" href="/answers/{{answer.id}}/set_as_the_best">Mark as the best</a>
+    </p>
+  </td>
+  <td>
+    <div class="files mb-3">
+      <p>Files:</p>
+      <ul>
+        {{#each links}}
+          <li class"mb-3 link d-flex align-items-center justify-content-between" data-link-id="link.id">
+            <a href="{{this.url}}">{{this.name}}</a>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </td>
+  <td>
+    <div class="links mb-3">
+      <p>Links:</p>
+      <ul>
+        {{#each links}}
+          <li class"mb-3 link d-flex align-items-center justify-content-between" data-link-id="link.id">
+            <a href="{{this.url}}">{{this.name}}</a>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </td>
+  <td>
+  </td>
+</tr>

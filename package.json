@@ -10,6 +10,8 @@
     "@rails/webpacker": "5.4.0",
     "bootstrap": "^5.0.2",
     "gist-client": "^1.1.1",
+    "handlebars": "^4.7.7",
+    "handlebars-loader": "^1.7.1",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0",

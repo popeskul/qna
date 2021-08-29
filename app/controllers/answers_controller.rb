@@ -45,7 +45,9 @@ class AnswersController < ApplicationController
     ActionCable.server.broadcast(
       "questions/#{params[:question_id]}/answers", {
         partial: ApplicationController.render(partial: 'answers/answer', locals: { answer: @answer, current_user: current_user }),
-        answer: @answer
+        answer: @answer,
+        links: @answer.links,
+        files: @answer.files
       }
     )
   end

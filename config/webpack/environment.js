@@ -1,6 +1,16 @@
+const path = require("path")
+const webpack = require('webpack')
 const { environment } = require('@rails/webpacker')
 
-const webpack = require('webpack')
+environment.loaders.prepend('handlebars', {
+    test: /\.hbs$/,
+    loader: 'handlebars-loader',
+    query: {
+        partialDirs: [
+            path.resolve(__dirname, '../../app/javascript/templates')
+        ]
+    }
+})
 
 environment.plugins.append(
     'Provide',

@@ -1,3 +1,5 @@
+import answerTemplate from '../../templates/answer.hbs';
+
 $(document).on('turbolinks:load', function(){
     const answer = $('.answers');
 
@@ -20,6 +22,12 @@ App.cable.subscriptions.create({ channel: "AnswersChannel", question_id: gon.que
     connected() {
         return this.perform("follow")
     },
-    received: (data) => $('.answers tbody').append(data.partial)
+    received: (data) => {
+        const { answer, links, files } = data;
+        const isAuthor = answer.author_id === gon.current_user?.id
+        const template = isAuthor ? data.partial : answerTemplate({ answer, links, files })
+
+        $('.answers tbody').append(template)
+    }
 });
 

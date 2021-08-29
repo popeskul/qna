@@ -8,5 +8,5 @@ var errors = $('.answer-errors')
   errors.html('');
   flash.html('');
   flash.html('<%= j render "shared/flash_errors"%>');
-  $('.new-answer #answer_body').val('');
+  $('.new-answer')[0].reset();
 <% end %>
