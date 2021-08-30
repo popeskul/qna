@@ -1,20 +1,19 @@
 require 'rails_helper'
 
-feature 'User can answer the question', %q{
+feature 'User can answer the question', '
   In order to answer the question, user can fill
   form and submit
-} do
+' do
+  given(:user) { create(:user) }
   given(:question) { create(:question) }
   given(:answer_text) { Faker::Lorem.unique.sentence }
-  
-  describe 'Authenticated user' do
-    given(:user) { create(:user) }
 
+  describe 'Authenticated user' do
     before do
       sign_in(user)
       visit question_path(question)
     end
-    
+
     scenario 'Authenticated user answer the question', js: true do
       fill_in 'Body', with: answer_text
 
@@ -51,6 +50,31 @@ feature 'User can answer the question', %q{
 
       expect(page).to_not have_content answer_text
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    end
+  end
+
+  context 'multiple session' do
+    scenario 'answer appears on another user page', js: true do
+      using_session('guest') do
+        visit question_path(question)
+      end
+
+      using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      using_session('user') do
+        fill_in 'Body', with: answer_text
+        click_on 'Post an answer'
+
+        expect(page).to have_content 'The answer was created successfully.'
+        expect(page).to have_content answer_text
+      end
+
+      using_session('guest') do
+        expect(page).to have_content answer_text
+      end
     end
   end
 end

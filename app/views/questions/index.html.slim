@@ -1,13 +1,12 @@
-- unless questions.empty?
-  .questions
-    table.table.table-sm.table-borderless
-      thead
-        tr
-          th Title
-          th Files
-          th Action
-      tbody
-        = render questions
+.questions
+  table.table.table-sm.table-borderless
+    thead
+      tr
+        th Title
+        th Files
+        th Action
+    tbody
+      = render questions
 
 = link_to 'Ask question', new_question_path, class: 'btn btn-primary'
 

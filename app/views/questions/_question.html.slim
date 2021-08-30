@@ -2,7 +2,7 @@
   td
     = link_to question.title, question_path(question), class: 'link-primary p-2'
 
-    - if user_signed_in? && current_user.author_of?(question)
+    - if current_user&.author_of?(question)
       = link_to 'Edit', '#', class: 'btn btn-link edit-question-link', data: { question_id: question.id }
 
       .question-errors.mt-3
@@ -26,6 +26,6 @@
     - if question.files.attached?
       ul
       - question.files.each do |file|
-        = render 'shared/attachments', resource: question
+        = render 'shared/attachments', resource: question, current_user: current_user
   td
     = question.body

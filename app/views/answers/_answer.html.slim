@@ -9,7 +9,6 @@
       - if current_user&.author_of?(answer) && !answer.best?
         p = link_to 'Mark as the best', set_as_the_best_answer_path(answer), class: 'answer-best', method: :post, remote: true
 
-      - if user_signed_in?
         = link_to 'Edit', '', class: 'edit-answer-link btn btn-link', data: { answer_id: answer.id }
 
         = form_with model: answer, remote: true, local: false, html: { id: "edit-answer-#{answer.id}", class: 'edit-answer d-none mt-3' } do |f|
@@ -23,15 +22,27 @@
             = render 'links/form', form: f
           .mb-3
           = f.submit 'Save', class: 'btn btn-primary'
+
+      .answer-comments.mb-4
+        | Answer Comments:
+        .answer-comments-list data-answer-comments-list=answer.id
+          = render answer.comments
+        = render 'comments/form', commentable: answer
+
+        - if current_user
+          = link_to 'Add comment', '', class: 'button-answer-comment btn btn-info', data: { answer_id: answer.id }
     td
       - if answer.files.attached?
-        = render 'shared/attachments', resource: answer
-
-      .links.mb-3
-        p Links:
-        ul
-          - answer.links.each do |link|
-            = render link
+        .files.mb-3
+          p Files:
+          = render 'shared/attachments', resource: answer, current_user: current_user
+    td
+      - unless answer.links.empty?
+        .links.mb-3
+          p Links:
+          ul
+            - answer.links.each do |link|
+              = render link
     td
       - if current_user&.author_of?(answer)
         = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, local: false, class: "link-danger delete-answer"

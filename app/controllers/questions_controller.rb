@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
+  after_action :publish_question, only: %i[create]
 
   include Voted
 
@@ -15,6 +16,11 @@ class QuestionsController < ApplicationController
   def show
     @answer = question.answers.new
     @answer.links.new
+
+    gon.push({
+               current_user: current_user,
+               question_id: question.id
+             })
   end
 
   def create
@@ -47,6 +53,20 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast(
+      'questions', {
+        partial: ApplicationController.render(
+          partial: 'questions/question',
+          locals: { question: @question, current_user: current_user }
+        ),
+        question: @question
+      }
+    )
+  end
 
   def question_params
     params.require(:question).permit(:title, :body, files: [], links_attributes: %i[name url], reward_attributes: %i[title image])

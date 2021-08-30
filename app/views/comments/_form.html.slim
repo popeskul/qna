@@ -1,0 +1,9 @@
+= form_with model: [commentable, commentable.comments.new],
+        class: 'd-none',
+        html: { id: "Add-#{commentable.class}-Comment-#{commentable.id}" },
+        local: false do |f|
+  .mb-3
+    = f.label :body, 'Comment body', class: 'form-label'
+    = f.text_area :body, class: 'form-control comment-textarea', rows: 5
+  .mb-3
+    = f.submit 'Save comment', class: 'btn btn-primary'

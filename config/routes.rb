@@ -7,11 +7,15 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :commentable do
+    resources :comments, only: :create
+  end
+
   devise_for :users
   root to: 'questions#index'
 
-  resources :questions, concerns: :voteble, shallow: true do
-    resources :answers, concerns: :voteble do
+  resources :questions, concerns: %i[voteble commentable], shallow: true do
+    resources :answers, concerns: %i[voteble commentable] do
       post :set_as_the_best, on: :member
     end
   end
@@ -23,4 +27,6 @@ Rails.application.routes.draw do
   resources :links, only: :destroy
 
   resources :rewards, only: :index
+
+  mount ActionCable.server => '/cable'
 end
