@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# model Link
 class Link < ApplicationRecord
   belongs_to :linkable, touch: true, polymorphic: true
 

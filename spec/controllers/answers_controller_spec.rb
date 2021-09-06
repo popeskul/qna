@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
@@ -32,7 +34,9 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attributes' do
       before { login(user2) }
-      let(:answer) { post :create, params: { question_id: question.id, answer: attributes_for(:answer, :invalid), format: :js } }
+      let(:answer) do
+        post :create, params: { question_id: question.id, answer: attributes_for(:answer, :invalid), format: :js }
+      end
 
       it 'does not save the new answer in the database' do
         expect { answer }.to_not change(question.answers, :count)
@@ -80,7 +84,9 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     let(:answer) { create(:answer, question: question) }
-    let(:update) { patch :update, params: { id: answer, question_id: question.id, answer: attributes_for(:answer), format: :js } }
+    let(:update) do
+      patch :update, params: { id: answer, question_id: question.id, answer: attributes_for(:answer), format: :js }
+    end
     let(:another_user) { create :user }
 
     context 'if answer belongs to the user' do
@@ -97,7 +103,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'changes answer attributes' do
-        patch :update, params: { id: answer, question_id: question, answer: { body: 'new body'} }, format: :js
+        patch :update, params: { id: answer, question_id: question, answer: { body: 'new body' } }, format: :js
         answer.reload
         expect(answer.body).to eq 'new body'
       end
@@ -113,7 +119,7 @@ RSpec.describe AnswersController, type: :controller do
       before { sign_in(another_user) }
 
       it 'does not change answer attributes' do
-        patch :update, params: { id: answer, question_id: question, answer: { body: 'new body'} }, format: :js
+        patch :update, params: { id: answer, question_id: question, answer: { body: 'new body' } }, format: :js
         answer.reload
         expect(answer.body).not_to eq 'new body'
       end

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# QuestionsController
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   after_action :publish_question, only: %i[create]
@@ -69,6 +72,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [], links_attributes: %i[name url], reward_attributes: %i[title image])
+    params.require(:question).permit(:title, :body, files: [], links_attributes: %i[name url],
+                                                    reward_attributes: %i[title image])
   end
 end

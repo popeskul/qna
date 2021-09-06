@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Commentable
 module Commentable
   extend ActiveSupport::Concern
 

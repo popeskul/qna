@@ -11,7 +11,8 @@ Rails.application.routes.draw do
     resources :comments, only: :create
   end
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
+
   root to: 'questions#index'
 
   resources :questions, concerns: %i[voteble commentable], shallow: true do

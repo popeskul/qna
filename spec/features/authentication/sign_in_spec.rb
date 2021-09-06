@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can log in', %q{
+feature 'User can log in', "
   In order to ask questions
   As an unauthenticated user
   I'd like to be able to sign in
-} do
+" do
   given(:user) { create(:user) }
 
   background { visit new_user_session_path }
@@ -21,7 +23,7 @@ feature 'User can log in', %q{
     fill_in 'Email', with: 'wrong@mail.com'
     fill_in 'Password', with: '123123'
     click_on 'Log in'
-  
+
     expect(page).to have_content 'Invalid Email or password.'
   end
 end

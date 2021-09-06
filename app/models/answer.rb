@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Answer
 class Answer < ApplicationRecord
   include Votable
   include Commentable

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 feature 'Vote for answer', %(
@@ -81,7 +83,6 @@ feature 'Vote for answer', %(
         visit question_path(question2)
 
         within '.answer-votes' do
-
           find(:css, '.vote-up').click
           find(:css, '.vote-up').click
 

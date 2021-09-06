@@ -9,6 +9,10 @@
 .DS_Store
 .env
 
+config/secrets.yml
+
+coverage/
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
