@@ -1,0 +1,8 @@
+AllCops:
+  Exclude:
+    - bin/**/*
+    - config/**/*
+    - db/**/*
+
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context', 'shared_examples_for', 'shared_examples', 'feature', 'shared_context']

@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module ActiveStorage
+  # AttachmentsController
   class AttachmentsController < ApplicationController
     before_action :authenticate_user!
 

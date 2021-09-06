@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'voted' do
   let(:user)       { create(:user) }
   let(:model)      { create(described_class.controller_name.classify.underscore.to_sym) }
@@ -60,7 +62,7 @@ shared_examples 'voted' do
         it 'can not vote twice' do
           subject
           subject
-          expect(model.evaluation).to eq -1
+          expect(model.evaluation).to eq(-1)
         end
 
         it 'can un vote' do

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'Edit an answer', %q{
+feature 'Edit an answer', '
   In order to fix errors
   Author can edit his answer
-} do
+' do
   let(:user) { create(:user) }
   let(:question) { create(:question) }
   let!(:answer) { create(:answer, question: question, author: user) }

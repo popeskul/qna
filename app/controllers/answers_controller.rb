@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# AnswersController
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[new destroy]
   after_action :publish_answer, only: %i[create]
@@ -44,7 +47,8 @@ class AnswersController < ApplicationController
 
     ActionCable.server.broadcast(
       "questions/#{params[:question_id]}/answers", {
-        partial: ApplicationController.render(partial: 'answers/answer', locals: { answer: @answer, current_user: current_user }),
+        partial: ApplicationController.render(partial: 'answers/answer',
+                                              locals: { answer: @answer, current_user: current_user }),
         answer: @answer,
         links: @answer.links,
         files: @answer.files

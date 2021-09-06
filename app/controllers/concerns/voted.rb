@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Voted
 module Voted
   extend ActiveSupport::Concern
 

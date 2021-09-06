@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can sign up', %q{
+feature 'User can sign up', '
   In order to user the service
   User can sign up
-} do
+' do
   scenario 'User sign up' do
     user_password = '123123'
 
