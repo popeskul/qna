@@ -10,6 +10,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
 
   describe 'GET #new' do
+    before { login(user) }
     before { get :new, params: { question_id: question.id } }
 
     it 'renders new view' do
@@ -77,7 +78,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to question#show' do
         delete_answer
-        expect(response).to render_template :destroy
+        expect(response).to_not redirect_to question
       end
     end
   end

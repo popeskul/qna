@@ -10,6 +10,8 @@ class QuestionsController < ApplicationController
   expose :questions, -> { Question.all }
   expose :question, find: -> { Question.with_attached_files.find(params[:id]) }
 
+  authorize_resource
+
   def new
     @question = Question.new
     @question.links.new
@@ -37,10 +39,8 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(question)
-      question.update(question_params)
-      flash.now[:notice] = 'The question was updated successfully.'
-    end
+    question.update(question_params)
+    flash.now[:notice] = 'The question was updated successfully.'
 
     @questions = questions
   end
@@ -48,8 +48,7 @@ class QuestionsController < ApplicationController
   def destroy
     if current_user.author_of?(question)
       question.destroy
-      flash[:notice] = 'Question was successfully deleted'
-      redirect_to questions_path
+      redirect_to questions_path, notice: 'Question was successfully deleted'
     else
       redirect_to question
     end

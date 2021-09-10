@@ -47,11 +47,8 @@ feature 'User can answer the question', '
   describe 'Unauthenticated user' do
     scenario 'Unauthenticated user tries answer the question with correct body' do
       visit question_path(question)
-      fill_in 'answer_body', with: answer_text
-      click_on 'Post an answer'
 
-      expect(page).to_not have_content answer_text
-      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+      expect(page).to_not have_css '.new-answer'
     end
   end
 

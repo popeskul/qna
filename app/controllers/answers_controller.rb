@@ -10,6 +10,8 @@ class AnswersController < ApplicationController
   expose :question, -> { Question.find(params[:question_id]) if params[:question_id] }
   expose :answer, find: -> { Answer.with_attached_files.find(params[:id]) }
 
+  authorize_resource
+
   def create
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
@@ -18,16 +20,13 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(answer)
-      answer.destroy
-      flash.now[:notice] = 'Answer was successfully deleted'
-    else
-      flash.now[:error] = 'Cannot delete the answer'
-    end
+    authorize!(:destroy, answer)
+    answer.destroy
+    flash.now[:notice] = 'Answer was successfully deleted'
   end
 
   def update
-    if current_user.author_of?(answer)
+    if authorize! :update, answer
       answer.update(answer_params)
       flash.now[:notice] = 'The answer was updated successfully.'
     end

@@ -16,13 +16,7 @@ feature 'Vote for question', %(
   scenario 'Unauthorized user can not vote for question', :js do
     visit question_path(question)
 
-    within '.question-votes' do
-      find(:css, '.vote-up').click
-
-      expect(page).to have_content '0'
-    end
-
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_css '.question-votes'
   end
 
   describe 'Authorized user' do
@@ -33,12 +27,7 @@ feature 'Vote for question', %(
         question.update(author_id: user.id)
         visit question_path(question)
 
-        within '.question-votes' do
-          find(:css, '.vote-up').click
-
-          expect(page).to have_content '0'
-        end
-        expect(page).to have_content 'Author can not vote'
+        expect(page).to_not have_css '.question-votes'
       end
     end
 
