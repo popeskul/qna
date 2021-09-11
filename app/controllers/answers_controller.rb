@@ -11,6 +11,8 @@ class AnswersController < ApplicationController
   expose :answer, find: -> { Answer.with_attached_files.find(params[:id]) }
 
   def create
+    authorize question.answers
+
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
 
@@ -18,25 +20,24 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(answer)
-      answer.destroy
-      flash.now[:notice] = 'Answer was successfully deleted'
-    else
-      flash.now[:error] = 'Cannot delete the answer'
-    end
+    authorize answer
+
+    answer.destroy
+    flash.now[:notice] = 'Answer was successfully deleted'
   end
 
   def update
-    if current_user.author_of?(answer)
-      answer.update(answer_params)
-      flash.now[:notice] = 'The answer was updated successfully.'
-    end
+    authorize answer
+    answer.update(answer_params)
+    flash.now[:notice] = 'The answer was updated successfully.'
 
     @answer = answer
   end
 
   def set_as_the_best
-    answer.set_the_best_answer if current_user.author_of?(answer.question)
+    authorize answer
+
+    answer.set_the_best_answer
     @question = answer.question
   end
 

@@ -90,7 +90,7 @@ feature 'Vote for answer', %(
         end
       end
 
-      scenario 'user can un vote', :js do
+      scenario 'user can un vote', js: true do
         answer2.votes.create(user: user, value: 1)
         visit question_path(question2)
 

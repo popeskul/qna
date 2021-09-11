@@ -1,0 +1,13 @@
+= form_with model: [question, answer], local: false, class: 'new-answer' do |f|
+  .answer-errors
+    = render 'shared/errors', resource: answer
+  .mb-3
+    = f.label :body, class: 'form-label'
+    = f.text_field :body, class: 'form-control'
+  .mb-3
+    = f.label :files, class: 'form-label'
+    = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
+  .mb-3
+    = render 'links/form', form: f
+  .mb-3
+    = f.submit 'Post an answer', class: 'btn btn-primary'

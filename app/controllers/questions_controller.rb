@@ -11,6 +11,8 @@ class QuestionsController < ApplicationController
   expose :question, find: -> { Question.with_attached_files.find(params[:id]) }
 
   def new
+    authorize Question
+
     @question = Question.new
     @question.links.new
     @question.build_reward
@@ -20,15 +22,13 @@ class QuestionsController < ApplicationController
     @answer = question.answers.new
     @answer.links.new
 
-    gon.push({
-               current_user: current_user,
-               question_id: question.id
-             })
+    gon.push({ current_user: current_user, question_id: question.id })
   end
 
   def create
-    @question = current_user.questions.new(question_params)
+    authorize question
 
+    @question = current_user.questions.new(question_params)
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
@@ -37,22 +37,19 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(question)
-      question.update(question_params)
-      flash.now[:notice] = 'The question was updated successfully.'
-    end
+    authorize question
+
+    question.update(question_params)
+    flash.now[:notice] = 'The question was updated successfully.'
 
     @questions = questions
   end
 
   def destroy
-    if current_user.author_of?(question)
-      question.destroy
-      flash[:notice] = 'Question was successfully deleted'
-      redirect_to questions_path
-    else
-      redirect_to question
-    end
+    authorize question
+
+    question.destroy
+    redirect_to questions_path, notice: 'Question was successfully deleted'
   end
 
   private

@@ -151,11 +151,6 @@ RSpec.describe QuestionsController, type: :controller do
         it 'con not delete another question' do
           expect { delete_question }.to_not change(Question, :count)
         end
-
-        it 'redirects to question#show' do
-          delete_question
-          expect(response).to redirect_to question_path(question)
-        end
       end
 
       context 'not authenticated user' do
