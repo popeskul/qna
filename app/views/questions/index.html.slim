@@ -9,7 +9,7 @@
       - if questions.present?
         = render questions
 
-- if can? :create, Question
+- if policy(Question).create?
   = link_to 'Ask question', new_question_path, class: 'btn btn-primary'
 
 = javascript_pack_tag 'utilities/questions.js'

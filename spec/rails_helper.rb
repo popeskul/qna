@@ -3,7 +3,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require 'simplecov'
-require 'cancan/matchers'
+require 'pundit/rspec'
 SimpleCov.start
 
 ENV['RAILS_ENV'] ||= 'test'

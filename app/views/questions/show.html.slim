@@ -1,6 +1,6 @@
 .question
   .mb-4
-    - if can? :vote_up, question
+    - if policy(question).vote?
       = render 'votes/vote', resource: question
 
     .h3.mb-3 = question.title
@@ -26,11 +26,11 @@
       = render question.comments
     = render 'comments/form', commentable: question
 
-    - if can? :comment, question
+    - if policy(question).comment?
       .mb-3
         = link_to 'Add comment', '', class: 'button-question-comment btn btn-info', data: { question_id: question.id }
 
-  - if can? :destroy, question
+  - if policy(question).destroy?
     .mb-3
       = link_to 'Delete question', question_path(question), method: :delete, class: 'btn btn-outline-danger'
 
@@ -44,7 +44,7 @@
     tbody
       = render question.answers, current_user: current_user
 
-  - if can? :create, Answer
+  - if policy(Answer).create?
     = render 'answers/form', question: question, answer: @answer
 
 = javascript_pack_tag 'utilities/answers.js'

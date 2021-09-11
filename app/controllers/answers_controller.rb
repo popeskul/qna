@@ -10,9 +10,9 @@ class AnswersController < ApplicationController
   expose :question, -> { Question.find(params[:question_id]) if params[:question_id] }
   expose :answer, find: -> { Answer.with_attached_files.find(params[:id]) }
 
-  authorize_resource
-
   def create
+    authorize question.answers
+
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
 
@@ -20,22 +20,24 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    authorize!(:destroy, answer)
+    authorize answer
+
     answer.destroy
     flash.now[:notice] = 'Answer was successfully deleted'
   end
 
   def update
-    if authorize! :update, answer
-      answer.update(answer_params)
-      flash.now[:notice] = 'The answer was updated successfully.'
-    end
+    authorize answer
+    answer.update(answer_params)
+    flash.now[:notice] = 'The answer was updated successfully.'
 
     @answer = answer
   end
 
   def set_as_the_best
-    answer.set_the_best_answer if current_user.author_of?(answer.question)
+    authorize answer
+
+    answer.set_the_best_answer
     @question = answer.question
   end
 

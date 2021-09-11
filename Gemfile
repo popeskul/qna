@@ -7,7 +7,6 @@ ruby '2.7.3'
 
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
-gem 'cancancan'
 gem 'cocoon'
 gem 'decent_exposure', '~> 3.0'
 gem 'devise'
@@ -24,6 +23,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-twitter'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
+gem 'pundit'
 gem 'rails', '~> 6.1.4'
 gem 'sass-rails', '>= 6'
 gem 'slim-rails'
@@ -34,6 +34,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
+  gem 'pundit-matchers'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 5.0.0'
   gem 'rubocop', require: false

@@ -5,10 +5,17 @@ module ActiveStorage
   class AttachmentsController < ApplicationController
     before_action :authenticate_user!
 
-    expose :attachment, -> { ActiveStorage::Attachment.find(params[:id]) }
+    expose :attachment, -> { Attachment.find(params[:id]) }
 
     def destroy
-      attachment.purge if authorize! :destroy, attachment
+      authorize load_record
+      attachment.purge
+    end
+
+    private
+
+    def load_record
+      attachment.record_type.classify.constantize.find(attachment.record_id)
     end
   end
 end
