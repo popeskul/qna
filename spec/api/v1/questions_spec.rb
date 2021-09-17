@@ -18,11 +18,12 @@ describe 'Questions API', type: :request do
     end
 
     context 'authorized' do
+      let(:user) { create(:user) }
       let(:access_token) { create(:access_token) }
-      let!(:questions) { create_list(:question, 2) }
+      let!(:questions) { create_list(:question, 2, author: user) }
       let(:question) { questions.first }
-      let(:question_response) { JSON.parse(json['questions']).find { |q| q['id'] == question.id } }
-      let!(:answers) { create_list(:answer, 3, question: question) }
+      let(:question_response) { json['questions'].last }
+      let!(:answers) { create_list(:answer, 3, author: user, question: question) }
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
@@ -31,13 +32,21 @@ describe 'Questions API', type: :request do
       end
 
       it 'returns list of questions' do
-        expect(JSON.parse(json['questions']).size).to eq 2
+        expect(json['questions'].count).to eq 2
       end
 
       it 'returns all public fields' do
         %w[id title body created_at updated_at].each do |attr|
           expect(question_response[attr]).to eq question.send(attr).as_json
         end
+      end
+
+      it 'contains author object' do
+        expect(question_response['author']['id']).to eq question.author.id
+      end
+
+      it 'contains short title' do
+        expect(question_response['short_title']).to eq question.title.truncate(7)
       end
 
       describe 'answers' do
