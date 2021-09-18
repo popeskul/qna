@@ -15,3 +15,9 @@ shared_examples_for 'Does not returnable private fields' do
     fields.each { |attr| expect(resource).to_not have_key(attr) }
   end
 end
+
+shared_examples 'Resource count returnable' do
+  it 'returns list of resources' do
+    expect(resource_response.size).to eq resource.size
+  end
+end

@@ -8,6 +8,16 @@ module Api
         @questions = Question.all
         render json: @questions
       end
+
+      def show
+        render json: question, serializer: QuestionDataSerializer
+      end
+
+      private
+
+      def question
+        @question = Question.find(params[:id])
+      end
     end
   end
 end
