@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Serializer for Data Serializer
 class QuestionDataSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 

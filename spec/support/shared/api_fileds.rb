@@ -21,3 +21,15 @@ shared_examples 'Resource count returnable' do
     expect(resource_response.size).to eq resource.size
   end
 end
+
+shared_examples_for 'Savable entity' do
+  it 'save a new entity' do
+    expect { request }.to change { entity.count }.by(1)
+  end
+end
+
+shared_examples_for 'Does not savable entity' do
+  it 'does not save the entity' do
+    expect { request }.to_not change(entity, :count)
+  end
+end

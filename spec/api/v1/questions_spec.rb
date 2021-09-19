@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Questions API', type: :request do
@@ -123,29 +125,28 @@ describe 'Questions API', type: :request do
 
       context 'with valid attributes' do
         let(:params) { { question: attributes_for(:question), access_token: access_token.token } }
-        let(:create_question) { post api_path, params: params }
+        let(:request) { post api_path, params: params }
 
-        it 'it saves a new question in database' do
-          expect { create_question }.to change(Question, :count).by(1)
+        it_behaves_like 'Savable entity' do
+          let(:entity)  { Question }
         end
 
         it 'redirects to show view' do
-          create_question
-          expect(response).to redirect_to assigns(:question)
+          request
+          expect(response.status).to eq 302
         end
       end
 
       context 'with invalid attributes' do
         let(:params) { { question: attributes_for(:question, :invalid), access_token: access_token.token } }
-        let(:create_question) { post api_path, params: params }
+        let(:request) { post api_path, params: params }
 
-        it "it doesn't save the question" do
-          # byebug
-          expect { create_question }.to_not change(Question, :count)
+        it_behaves_like 'Does not savable entity' do
+          let(:entity)  { Question }
         end
 
         it 're-render new view' do
-          create_question
+          request
           expect(response.status).to eq 204
         end
       end

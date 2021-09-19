@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Answers API', type: :request do
@@ -17,7 +19,9 @@ describe 'Answers API', type: :request do
       let(:access_token) { create(:access_token) }
       let!(:answers) { create_list(:answer, 2, question: question, author: user) }
 
-      before { get "/api/v1/questions/#{question.id}/answers", params: { access_token: access_token.token }, headers: headers }
+      before do
+        get "/api/v1/questions/#{question.id}/answers", params: { access_token: access_token.token }, headers: headers
+      end
 
       it_behaves_like 'API successful authorizable'
 
@@ -93,17 +97,20 @@ describe 'Answers API', type: :request do
     let(:api_path)     { "/api/v1/questions/#{question.id}/answers" }
     let(:access_token) { create(:access_token) }
 
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :post }
+    end
+
     context 'with valid attributes' do
       let(:params) { { question_id: question.id, answer: attributes_for(:answer), access_token: access_token.token } }
-      subject { post api_path, params: params }
+      let(:request) { post api_path, params: params }
 
-      it 'save a new answer' do
-        expect { subject }.to change { question.answers.reload.count }.by(1)
+      it_behaves_like 'API successful authorizable' do
+        before { request }
       end
 
-      it 'redirects to show' do
-        subject
-        expect(response.status).to eq 204
+      it_behaves_like 'Savable entity' do
+        let(:entity) { question.answers.reload }
       end
     end
 
@@ -111,13 +118,9 @@ describe 'Answers API', type: :request do
       let(:params) { { question_id: question.id, answer: attributes_for(:answer, :invalid) } }
       let(:create_answer) { post api_path, params: params }
 
-      it 'does not save the new answer in the database' do
-        expect { create_answer }.to_not change(question.answers, :count)
-      end
-
-      it 're-renders new view' do
-        create_answer
-        expect(response.status).to eq 401
+      it_behaves_like 'Does not savable entity' do
+        let(:request)  { create_answer }
+        let(:entity) { question.answers }
       end
     end
   end
@@ -141,7 +144,15 @@ describe 'Answers API', type: :request do
       }
     end
 
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :patch }
+    end
+
     context 'if answer belongs to the user' do
+      it_behaves_like 'API successful authorizable' do
+        before { update_answer }
+      end
+
       it 'assigns the requested answer to @answer' do
         update_answer
         expect(assigns(:answer)).to eq answer
@@ -170,6 +181,21 @@ describe 'Answers API', type: :request do
         expect(response.status).to eq 204
       end
     end
+
+    context 'if answer does not belong to the user' do
+      let(:other_user)     { create(:user) }
+      let(:other_answer)   { create(:answer, question: question, author: other_user) }
+      let(:other_api_path) { "/api/v1/answers/#{other_answer.id}" }
+      let(:params)         { { access_token: access_token.token, id: other_answer } }
+
+      let(:does_not_delete_answer) { delete other_api_path, headers: headers, params: params }
+
+      it 'does not change answer attributes' do
+        does_not_delete_answer
+        answer.reload
+        expect(answer.body).not_to eq 'new body'
+      end
+    end
   end
 
   describe 'DELETE /api/v1/answers/:id' do
@@ -184,7 +210,15 @@ describe 'Answers API', type: :request do
       delete api_path, headers: headers, params: { id: answer, question_id: question, access_token: access_token.token }
     end
 
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :delete }
+    end
+
     context 'if answer belongs to the user', js: true do
+      it_behaves_like 'API successful authorizable' do
+        before { delete_answer }
+      end
+
       it 'deletes answer' do
         expect { delete_answer }.to change(Answer, :count).by(-1)
       end

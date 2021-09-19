@@ -3,6 +3,7 @@
 # Api v1 for Answer Controller
 module Api
   module V1
+    # AnswersController for v1
     class AnswersController < Api::V1::BaseController
       expose :question, -> { Question.find(params[:question_id]) if params[:question_id] }
       expose :answer, find: -> { Answer.with_attached_files.find(params[:id]) }
