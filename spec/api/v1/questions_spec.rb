@@ -112,19 +112,20 @@ describe 'Questions API', type: :request do
 
   describe 'POST /api/v1/questions' do
     let(:api_path) { '/api/v1/questions' }
-    let(:user)     { create(:user) }
+    let(:user)     { create(:user, admin: true) }
+    let(:question) { create(:question, author: user) }
 
     it_behaves_like 'API Authorizable' do
       let(:method) { :post }
     end
 
     context 'authorized' do
-      let(:access_token) { create(:access_token) }
+      let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
       context 'with valid attributes' do
-        let(:params) { { question: attributes_for(:question), access_token: access_token.token } }
+        let(:params) { { question: attributes_for(:question, user: user), access_token: access_token.token } }
         let(:request) { post api_path, params: params }
 
         it_behaves_like 'Savable entity' do

@@ -18,25 +18,30 @@ module Api
       end
 
       def create
-        @answer = question.answers.new(answer_params)
-        @answer.author = current_resource_owner
+        authorize question.answers
 
-        flash.now[:notice] = 'The answer was created successfully.' if @answer.save
+        @answer = question.answers.new(answer_params)
+        @answer.author = current_user
+        @answer.save
       end
 
       def destroy
+        authorize answer
+
         answer.destroy
-        flash.now[:notice] = 'Answer was successfully deleted'
       end
 
       def update
+        authorize answer
+
         answer.update(answer_params)
-        flash.now[:notice] = 'The answer was updated successfully.'
 
         @answer = answer
       end
 
       def set_as_the_best
+        authorize answer
+
         answer.set_the_best_answer
         @question = answer.question
       end
@@ -44,7 +49,7 @@ module Api
       private
 
       def answer_params
-        params.require(:answer).permit(:body, files: [], links_attributes: %i[name url])
+        params.require(:answer).permit(:body)
       end
     end
   end

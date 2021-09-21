@@ -127,20 +127,20 @@ describe 'Answers API', type: :request do
 
   describe 'PATCH /api/v1/answers/:id' do
     let(:user)         { create(:user) }
-    let(:another_user) { create(:user) }
 
-    let(:question)     { create(:question, author: user) }
-    let(:answer)       { create(:answer, question: question) }
+    let!(:question)     { create(:question, author: user) }
+    let!(:answer)       { create(:answer, question: question, author: user) }
 
-    let(:access_token) { create(:access_token) }
+    let(:access_token) { create(:access_token, resource_owner_id: user.id) }
     let(:api_path)     { "/api/v1/answers/#{answer.id}" }
 
     let(:update_answer) do
-      patch api_path, params: {
+      patch api_path, headers: headers, params: {
         id: answer,
         question_id: question.id,
         answer: attributes_for(:answer),
-        access_token: access_token.token
+        access_token: access_token.token,
+        format: :js
       }
     end
 
@@ -199,11 +199,11 @@ describe 'Answers API', type: :request do
   end
 
   describe 'DELETE /api/v1/answers/:id' do
-    let!(:user) { create(:user) }
-    let(:question) { create(:question, author: user) }
-    let!(:answer) { create(:answer, question: question) }
+    let(:user) { create(:user) }
+    let!(:question) { create(:question, author: user) }
+    let!(:answer) { create(:answer, question: question, author: user) }
 
-    let(:access_token) { create(:access_token) }
+    let(:access_token) { create(:access_token, resource_owner_id: user.id) }
     let(:api_path)     { "/api/v1/answers/#{answer.id}" }
 
     let(:delete_answer) do
@@ -230,12 +230,13 @@ describe 'Answers API', type: :request do
     end
 
     context 'if answer does not belong to the user' do
-      let(:other_user)     { create(:user) }
-      let(:other_answer)   { create(:answer, question: question, author: other_user) }
-      let(:other_api_path) { "/api/v1/answers/#{other_answer.id}" }
-      let(:params)         { { access_token: access_token.token, id: other_answer } }
+      let(:other_user) { create(:user) }
+      let!(:other_question) { create(:question, author: other_user) }
+      let!(:other_answer) { create(:answer, question: other_question, author: other_user) }
+      let(:api_path) { "/api/v1/answers/#{other_answer.id}" }
+      let(:params) { { access_token: access_token.token, id: other_answer, question_id: other_question, format: :js } }
 
-      let(:does_not_delete_answer) { delete other_api_path, headers: headers, params: params }
+      let(:does_not_delete_answer) { delete api_path, headers: headers, params: params }
 
       it 'does not delete answer' do
         expect { does_not_delete_answer }.to_not change(Answer, :count)

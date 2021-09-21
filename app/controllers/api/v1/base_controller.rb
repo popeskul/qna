@@ -5,13 +5,11 @@ module Api
   module V1
     # BaseController
     class BaseController < ApplicationController
-      before_action :doorkeeper_authorize!, unless: :user_signed_in?
+      before_action :doorkeeper_authorize!
 
-      private
-
-      def current_resource_owner
+      def current_user
         if doorkeeper_token
-          @current_resource_owner || User.find(doorkeeper_token.resource_owner_id)
+          @current_user || User.find(doorkeeper_token.resource_owner_id)
         else
           warden.authenticate(scope: :user)
         end
