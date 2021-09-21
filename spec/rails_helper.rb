@@ -28,6 +28,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :view
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
+  config.include ApiHelpers, type: :request
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.use_transactional_fixtures = true

@@ -5,16 +5,19 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.3'
 
+gem 'active_model_serializers', '~> 0.10'
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'cocoon'
 gem 'decent_exposure', '~> 3.0'
 gem 'devise'
+gem 'doorkeeper'
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 gem 'gon'
 gem 'handlebars_assets'
 gem 'jbuilder', '~> 2.7'
 gem 'letter_opener'
+gem 'oj'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
