@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Model for Question
 class Question < ApplicationRecord
   include Votable
   include Commentable
@@ -16,4 +17,12 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :reward, reject_if: :all_blank, allow_destroy: true
+
+  after_create :calculate_reputation
+
+  private
+
+  def calculate_reputation
+    ReputationJob.perform_later(self)
+  end
 end
