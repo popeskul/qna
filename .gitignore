@@ -13,6 +13,8 @@ config/secrets.yml
 
 coverage/
 
+/dump.rdb
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
