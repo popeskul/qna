@@ -2,11 +2,10 @@
 
 # DailyDigestMailer
 class DailyDigestMailer < ApplicationMailer
-  #   en.daily_digest_mailer.digest.subject
-  #
   def digest(user)
-    @greeting = 'Hi'
+    @user = user
+    @questions = Question.where(updated_at: 24.hours.ago..Time.now)
 
-    mail to: user.email
+    mail to: @user.email, subject: 'Daily Digest'
   end
 end

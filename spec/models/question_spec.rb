@@ -9,6 +9,7 @@ RSpec.describe Question, type: :model do
   describe 'Associations' do
     it { should have_many(:answers).dependent(:destroy) }
     it { should have_many(:links).dependent(:destroy) }
+    it { should have_many(:subscriptions).dependent(:destroy) }
     it { should belong_to(:author) }
   end
 

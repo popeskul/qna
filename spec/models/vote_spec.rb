@@ -15,4 +15,20 @@ RSpec.describe Vote, type: :model do
     it { should validate_inclusion_of(:votable_type).in_array(%w[Question Answer]) }
     it { should validate_inclusion_of(:value).in_array([-1, 1]) }
   end
+
+  describe '#votable_author?' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, author: user) }
+    let(:question2) { create(:question) }
+    let(:vote) { create(:question_vote, user: user, votable: question) }
+    let(:vote2) { create(:question_vote, user: user, votable: question2) }
+
+    it 'author of Vote is the same as original Question' do
+      expect(vote.not_votable_author).to eq true
+    end
+
+    it 'user is not author' do
+      expect(vote2.not_votable_author).to eq false
+    end
+  end
 end

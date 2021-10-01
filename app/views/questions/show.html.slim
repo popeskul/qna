@@ -8,6 +8,10 @@
     - if question.files.attached?
       = render 'shared/attachments', resource: question, current_user: current_user
 
+    - if policy(Subscription).create?
+      .subscription
+        = render 'subscriptions/subscription', resource: question
+
     .links.mb-3
       p Links:
       ul

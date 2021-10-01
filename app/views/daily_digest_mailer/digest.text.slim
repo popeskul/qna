@@ -1,3 +1,6 @@
-' DailyDigest#digest
-= "\r\n" * 2
-' #{@greeting}, find me in app/views/daily_digest_mailer/digest.text.slim
+h1 DailyDigest#digest
+p = "Hello #{@user.email}!"
+p Your list of questions for the 24 hours
+ul
+- @questions&.each do |question|
+  li question.title

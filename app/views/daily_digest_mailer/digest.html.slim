@@ -1,2 +1,6 @@
 h1 DailyDigest#digest
-p = "#{@greeting}, find me in app/views/daily_digest_mailer/digest.html.slim"
+p = "Hello #{@user.email}!"
+p Your list of questions for the 24 hours
+ul
+- @questions&.each do |question|
+  li question.title
