@@ -1,0 +1,6 @@
+h1 DailyDigest#digest
+p = t('.welcome', email: @user.email)
+p = t('.text')
+ul
+- @questions&.each do |question|
+  li question.title

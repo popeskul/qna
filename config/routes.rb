@@ -1,4 +1,10 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   use_doorkeeper
 
   concern :voteble do
@@ -30,6 +36,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: %i[voteble commentable], shallow: true do
+    resources :subscriptions, only: %i[create destroy], shallow: true
     resources :answers, concerns: %i[voteble commentable] do
       post :set_as_the_best, on: :member
     end

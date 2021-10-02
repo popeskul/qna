@@ -8,16 +8,16 @@ header
 
       #navbarNav.collapse.navbar-collapse
         ul.navbar-nav.align-items-center.me-auto.mb-2.mb-lg-0
-          li.nav-item= link_to 'all questions', questions_path, class: 'nav-link text-white'
+          li.nav-item= link_to t('.all_questions'), questions_path, class: 'nav-link text-white'
           - if user_signed_in?
             li.nav-item
-              = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link text-white'
+              = link_to t('.log_out'), destroy_user_session_path, method: :delete, class: 'nav-link text-white'
             li.nav-item
               = current_user.email
             li.nav-item
-              = link_to 'Rewards', rewards_path, class: 'nav-link'
+              = link_to t('.rewards'), rewards_path, class: 'nav-link'
           - else
             li.nav-item
-              = link_to 'Enter', new_user_session_path, class: 'nav-link'
+              = link_to t('.enter'), new_user_session_path, class: 'nav-link'
             li.nav-item
-              = link_to 'Registration', new_user_registration_path, class: 'nav-link'
+              = link_to t('.registration'), new_user_registration_path, class: 'nav-link'

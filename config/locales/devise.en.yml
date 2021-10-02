@@ -19,14 +19,30 @@ en:
     mailer:
       confirmation_instructions:
         subject: "Confirmation instructions"
+        button:
+          confirm: 'Confirm my account'
       reset_password_instructions:
+        change_password: "Change my password"
         subject: "Reset password instructions"
+        text_requested: "Someone has requested a link to change your password. You can do this through the link below."
+        text_ignore_email: "If you didn't request this, please ignore this email."
+        text_create_new: "Your password won't change until you access the link above and create a new one."
+        welcome: "Hello %{email}!"
       unlock_instructions:
         subject: "Unlock instructions"
+        welcome: "Hello %{email}!"
+        text_account_locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+        text_click_to_unlock: "Click the link below to unlock your account:"
+        unlock_account: "Unlock my account"
       email_changed:
         subject: "Email Changed"
+        welcome: "Hello %{email}!"
+        text_being_changed_email: "We're contacting you to notify you that your email is being changed to %{unconfirmed_email}."
+        text_has_been_changed_email: "We're contacting you to notify you that your email has been changed to %{email}."
       password_change:
         subject: "Password Changed"
+        welcome: "Hello %{email}!"
+        description: "We're contacting you to notify you that your password has been changed."
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
@@ -36,6 +52,15 @@ en:
       send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
       updated: "Your password has been changed successfully. You are now signed in."
       updated_not_active: "Your password has been changed successfully."
+      edit:
+        title: "Change your password"
+        form:
+          password: "New password"
+          password_confirmation: "Confirm new password"
+          submit: "Change my password"
+      new:
+        title: "Forgot your password?"
+        submit: "Send me reset password instructions"
     registrations:
       destroyed: "Bye! Your account has been successfully cancelled. We hope to see you again soon."
       signed_up: "Welcome! You have signed up successfully."
@@ -45,14 +70,40 @@ en:
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirmation link to confirm your new email address."
       updated: "Your account has been updated successfully."
       updated_but_not_signed_in: "Your account has been updated successfully, but since your password was changed, you need to sign in again."
+      new:
+        title: "Sign up"
+      edit:
+        title: "Edit ${name}"
+        text_wait_confirmation: "Currently waiting confirmation for: %{email}"
+        text_leave_blank: "leave blank if you don't want to change it"
+        text_password_length: "%{length} characters minimum"
+        text_need_your_confirm: "we need your current password to confirm your changes"
+        submit: "Update"
+        cancel_account: "Cancel my account"
+        unhappy: "Unhappy? %{button}"
+        text_delete_modal: "Are you sure?"
+        back: "Back"
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
       already_signed_out: "Signed out successfully."
+      new:
+        login: "Log in"
     unlocks:
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions for how to unlock it in a few minutes."
       unlocked: "Your account has been unlocked successfully. Please sign in to continue."
+      new:
+        title: "Resend unlock instructions"
+        resend: "Resend unlock instructions"
+    shared:
+      links:
+        login: "Log in"
+        sign_up: "Sign up"
+        forgot_password: "Forgot your password?"
+        did_not_receive_confirmation: "Didn't receive confirmation instructions?"
+        did_not_receive_instructions: "Didn't receive unlock instructions?"
+        sign_in_with_social: "Sign in with %{social}"
   errors:
     messages:
       already_confirmed: "was already confirmed, please try signing in"

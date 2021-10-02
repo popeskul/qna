@@ -18,11 +18,19 @@ class Answer < ApplicationRecord
 
   default_scope { order(best: :desc) }
 
+  after_create :email_notification
+
   def set_the_best_answer
     transaction do
       question.answers.update_all(best: false)
       update!(best: true)
       question.reward&.update!(user: author)
     end
+  end
+
+  private
+
+  def email_notification
+    NotificationJob.perform_later(self)
   end
 end

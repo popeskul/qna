@@ -4,7 +4,9 @@
 require 'spec_helper'
 require 'simplecov'
 require 'pundit/rspec'
-SimpleCov.start
+SimpleCov.start do
+  add_filter "/config/"
+end
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)

@@ -1,0 +1,3 @@
+h1 Answer#answer_created
+= @user.email
+| create #{@answer.body}

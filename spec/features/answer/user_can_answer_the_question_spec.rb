@@ -17,7 +17,7 @@ feature 'User can answer the question', '
     end
 
     scenario 'Authenticated user answer the question', js: true do
-      fill_in 'Body', with: answer_text
+      fill_in 'Answer', with: answer_text
 
       click_on 'Post an answer'
 
@@ -26,7 +26,7 @@ feature 'User can answer the question', '
     end
 
     scenario 'Authenticated user answer the question with attached files', js: true do
-      fill_in 'Body', with: answer_text
+      fill_in 'Answer', with: answer_text
       attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
 
       click_on 'Post an answer'
@@ -64,7 +64,7 @@ feature 'User can answer the question', '
       end
 
       using_session('user') do
-        fill_in 'Body', with: answer_text
+        fill_in 'Answer', with: answer_text
         click_on 'Post an answer'
 
         expect(page).to have_content 'The answer was created successfully.'

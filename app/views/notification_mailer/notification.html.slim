@@ -1,0 +1,11 @@
+h1 = t('.title_new')
+
+h2 = link_to @question.title, url_for(@question)
+
+p
+  | #{t('.user')}:
+  strong  #{@user.email}
+p
+  | #{t('.answer')}:
+  strong  #{@answer.body}
+

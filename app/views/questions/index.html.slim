@@ -10,6 +10,6 @@
         = render questions
 
 - if policy(Question).create?
-  = link_to 'Ask question', new_question_path, class: 'btn btn-primary'
+  = link_to t('.ask'), new_question_path, class: 'btn btn-primary'
 
 = javascript_pack_tag 'utilities/questions.js'

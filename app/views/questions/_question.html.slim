@@ -3,17 +3,17 @@
     = link_to question.title, question_path(question), class: 'link-primary p-2'
 
     - if current_user&.author_of?(question)
-      = link_to 'Edit', '#', class: 'btn btn-link edit-question-link', data: { question_id: question.id }
+      = link_to t('.edit'), '#', class: 'btn btn-link edit-question-link', data: { question_id: question.id }
 
       .question-errors.mt-3
         = render 'shared/errors', resource: question
 
       = form_with(model: question, remote: true, local: false, html: { id: "edit-question-#{question.id}", class: 'edit-question-form d-none' }) do |f|
         .input-group.mb-3
-          = f.label :title, 'Title', class: 'input-group-text'
+          = f.label :title, class: 'input-group-text'
           = f.text_field :title, class: 'form-control'
         .input-group.mb-3
-          = f.label :body, 'Body', class: 'input-group-text'
+          = f.label :body, class: 'input-group-text'
           = f.text_area :body, class: 'form-control'
         .input-group.mb-3
           = f.label :files, class: 'form-label'
@@ -21,7 +21,7 @@
         .mb-3
           = render 'links/form', form: f
         .mb-3
-        = f.submit 'Save', class: 'btn btn-primary'
+        = f.submit class: 'btn btn-primary'
   td
     - if question.files.attached?
       ul
