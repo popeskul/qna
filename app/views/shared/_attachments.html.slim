@@ -3,4 +3,4 @@ ul
     li [class="file-id-#{file.id}"]
       span = link_to file.filename.to_s, url_for(file), class: 'p-2'
       - if current_user&.author_of?(resource)
-        = link_to "Delete file", active_storage_attachment_path(file), remote: true, method: :delete, class: 'link-danger'
+        = link_to t('.delete_file'), active_storage_attachment_path(file), remote: true, method: :delete, class: 'link-danger'

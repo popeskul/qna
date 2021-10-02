@@ -6,6 +6,6 @@ class DailyDigestMailer < ApplicationMailer
     @user = user
     @questions = Question.where(updated_at: 24.hours.ago..Time.now)
 
-    mail to: @user.email, subject: 'Daily Digest'
+    mail to: @user.email, subject: t('daily_digest_mailer.digest.subject')
   end
 end

@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
     authorize @commentable.comments
 
     @comment = @commentable.comments.new(comment_params.merge(user: current_user))
-    flash.now[:notice] = 'The comment was created successfully.' if @comment.save
+    flash.now[:notice] = t('.success') if @comment.save
   end
 
   private

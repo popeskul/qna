@@ -4,6 +4,6 @@ class NotificationMailer < ApplicationMailer
     @answer   = answer
     @question = answer.question
 
-    mail to: @user.email, subject: 'You have got a new answer to your question'
+    mail to: @user.email, subject: t('notification_mailer.notification.subject')
   end
 end

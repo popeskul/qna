@@ -1,6 +1,6 @@
 h1 DailyDigest#digest
-p = "Hello #{@user.email}!"
-p Your list of questions for the 24 hours
+p = t('.welcome', email: @user.email)
+p = t('.text')
 ul
 - @questions&.each do |question|
   li question.title

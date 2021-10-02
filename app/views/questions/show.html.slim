@@ -13,7 +13,7 @@
         = render 'subscriptions/subscription', resource: question
 
     .links.mb-3
-      p Links:
+      p = "#{t('.links')}:"
       ul
         - question.links.each do |link|
           = render link
@@ -25,26 +25,26 @@
     = render 'shared/errors', resource: @comment
 
   .question-comments
-    | Question Comments:
+    | #{t('.question_comments')}:
     .question-comments-list
       = render question.comments
     = render 'comments/form', commentable: question
 
     - if policy(question).comment?
       .mb-3
-        = link_to 'Add comment', '', class: 'button-question-comment btn btn-info', data: { question_id: question.id }
+        = link_to t('.add_comment'), '', class: 'button-question-comment btn btn-info', data: { question_id: question.id }
 
   - if policy(question).destroy?
     .mb-3
-      = link_to 'Delete question', question_path(question), method: :delete, class: 'btn btn-outline-danger'
+      = link_to t('.delete_question'), question_path(question), method: :delete, class: 'btn btn-outline-danger'
 
   table.table.table-sm.table-borderless.answers
     thead
       tr
-        th Answer
-        th Files
-        th Links
-        th Action
+        th = t('.table.answer')
+        th = t('.table.files')
+        th = t('.table.links')
+        th = t('.table.action')
     tbody
       = render question.answers, current_user: current_user
 

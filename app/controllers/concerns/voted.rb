@@ -24,7 +24,7 @@ module Voted
   private
 
   def validate_votable
-    error_response('Author can not vote') if current_user.author_of?(@votable)
+    error_response(t('concerns.voted.validate_error')) if current_user.author_of?(@votable)
   end
 
   def success_response

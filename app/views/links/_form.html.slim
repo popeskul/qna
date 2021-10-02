@@ -5,10 +5,10 @@
     .col
       .form-floating
         = link.text_field :name, class: 'form-control'
-        = link.label :name, 'Link name', class: 'form-label'
+        = link.label :name, class: 'form-label'
     .col
       .form-floating
         = link.text_field :url, class: 'form-control'
         = link.label :url, class: 'form-label'
 .links
-  = link_to_add_association 'Add link', form, :links, partial: 'links/link_fields'
+  = link_to_add_association t('links.button.create'), form, :links, partial: 'links/link_fields'

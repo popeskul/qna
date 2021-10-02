@@ -1,17 +1,17 @@
 .btn-group.btn-group-sm.votes [class="#{resource.class.name.underscore}-votes"]
-  = link_to 'vote +', polymorphic_path(resource, action: :vote_up),
+  = link_to t('.vote_up'), polymorphic_path(resource, action: :vote_up),
           method: :patch,
           data: { type: :json },
           class: 'btn btn-success btn-vote vote-up',
           remote: true
 
-  = link_to 'vote -', polymorphic_path(resource, action: :vote_down),
+  = link_to t('.vote_down'), polymorphic_path(resource, action: :vote_down),
           method: :patch,
           data: { type: :json },
           class: 'btn btn-danger btn-vote vote-down',
           remote: true
 
-  = link_to 'un vote', polymorphic_path(resource, action: :un_vote),
+  = link_to t('.un_vote'), polymorphic_path(resource, action: :un_vote),
           method: :delete,
           data: { type: :json },
           class: 'btn btn-info btn-vote un-vote',

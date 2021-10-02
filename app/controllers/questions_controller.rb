@@ -30,7 +30,7 @@ class QuestionsController < ApplicationController
 
     @question = current_user.questions.new(question_params)
     if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
+      redirect_to @question, notice: t('.success')
     else
       render :new
     end
@@ -40,7 +40,7 @@ class QuestionsController < ApplicationController
     authorize question
 
     question.update(question_params)
-    flash.now[:notice] = 'The question was updated successfully.'
+    flash.now[:notice] = t('.success')
 
     @questions = questions
   end
@@ -49,7 +49,7 @@ class QuestionsController < ApplicationController
     authorize question
 
     question.destroy
-    redirect_to questions_path, notice: 'Question was successfully deleted'
+    redirect_to questions_path, notice: t('.success')
   end
 
   private

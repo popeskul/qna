@@ -1,11 +1,11 @@
-h1 New answer for question
+h1 = t('.title_new')
 
 h2 = link_to @question.title, url_for(@question)
 
 p
-  | user:
+  | #{t('.user')}:
   strong  #{@user.email}
 p
-  | answer:
+  | #{t('.answer')}:
   strong  #{@answer.body}
 

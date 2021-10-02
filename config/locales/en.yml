@@ -1,33 +1,122 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  helpers:
+    submit:
+      answer:
+        update: 'Save'
+      comment:
+        create: 'Save comment'
+      user:
+        create: "Sign up"
+      question:
+        update: 'Save'
+        create: 'Ask'
+    label:
+      answer:
+        body: 'Answer'
+        files: 'Files'
+      comment:
+        body: 'Comment body'
+      link:
+        name: 'Link name'
+        url: 'Url'
+      question:
+        title: 'Title'
+        body: 'Body'
+      reward:
+        title: 'Reward title'
+        image: 'Image'
+
+  questions:
+    index:
+      ask: 'Ask question'
+    create:
+      success: 'Your question successfully created.'
+    update:
+      success: 'The question was updated successfully.'
+    destroy:
+      success: 'Question was successfully deleted'
+    answer:
+      delete_answer: 'Delete answer'
+    question:
+      edit: "Edit"
+    show:
+      links: "Links"
+      question_comments: "Question Comments"
+      add_comment: "Add comment"
+      delete_question: "Delete question"
+      table:
+        answer: "Answer"
+        files: "Files"
+        links: "Links"
+        action: "Action"
+  answers:
+    answer:
+      button:
+        delete: 'Delete answer'
+        add_comment: 'Add comment'
+        save: 'Save'
+        edit: 'Edit'
+        mark_as_the_best: 'Mark as the best'
+    create:
+      success: 'The answer was created successfully.'
+    update:
+      success: 'The answer was updated successfully.'
+    destroy:
+      success: 'Answer was successfully deleted'
+  comments:
+    create:
+      success: 'The comment was created successfully.'
+  links:
+    button:
+      create: 'Add link'
+      delete: 'remove link'
+  rewards:
+    form:
+      title: "Reward"
+    index:
+      title: "Reward"
+      table:
+        question: 'question'
+        reward: 'reward'
+        image: 'image'
+      nothing_found: 'Nothing found'
+  subscriptions:
+    subscription:
+      unsubscribe: "Unsubscribe"
+      subscribe: "Subscribe"
+  votes:
+    vote:
+      vote_up: "vote +"
+      vote_down: "vote -"
+      un_vote: "un vote"
+
+  shared:
+    attachments:
+      delete_file: "Delete file"
+    header:
+      all_questions: "all questions"
+      log_out: 'Log out'
+      rewards: 'Rewards'
+      enter: 'Enter'
+      registration: 'Registration'
+
+  concerns:
+    voted:
+      validate_error: 'Author can not vote'
+
+  daily_digest_mailer:
+    digest:
+      welcome: "Hello %{email}!"
+      subject: 'Daily Digest'
+      text: 'Your list of questions for the 24 hours'
+
+  notification_mailer:
+    notification:
+      title_new: 'New answer for question'
+      subject: 'You have got a new answer to your question'
+      user: 'user'
+      answer: 'answer'
+
+  url_validator:
+    error:
+      must_be_valid: 'must be a valid URL'

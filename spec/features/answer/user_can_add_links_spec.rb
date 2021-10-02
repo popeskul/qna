@@ -24,7 +24,8 @@ feature 'User can add links to answer', "
     end
 
     scenario 'User add links when asks answer', js: true do
-      fill_in 'Body', with: 'body body body'
+      # save_and_open_page
+      fill_in 'Answer', with: 'body body body'
 
       fill_in 'Link name', with: 'My gist'
       fill_in 'Url', with: gist_url
@@ -49,7 +50,7 @@ feature 'User can add links to answer', "
       old_link_name = 'Link name'
       new_link_name = 'Link name 2'
 
-      fill_in 'Body', with: 'body body body'
+      fill_in 'Answer', with: 'body body body'
       fill_in 'Link name', with: old_link_name
       fill_in 'Url', with: url
 

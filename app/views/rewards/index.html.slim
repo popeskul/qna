@@ -1,21 +1,21 @@
-.h4 Rewards:
+.h4 = t('.title'):
 
 - if @rewards.present?
   table.table.table-sm.table-borderless
     thead
       tr
-        th question
-        th reward
-        th image
+        th = t('.table.question')
+        th = t('.table.reward')
+        th = t('.table.image')
     tbody
       - !@rewards.empty? do |reward|
         tr
           td
-            = "question -#{reward.question.title}"
+            = "#{t('.table.question')} -#{reward.question.title}"
           td
-            = "reward -#{reward.title}"
+            = "#{t('.table.reward')]} -#{reward.title}"
           td
             - if reward.image.attached?
               = image_tag reward.image, height: 'auto', width: 100
 - else
-  p Nothing found
+  p = t('.nothing_found')

@@ -16,20 +16,20 @@ class AnswersController < ApplicationController
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
 
-    flash.now[:notice] = 'The answer was created successfully.' if @answer.save
+    flash.now[:notice] = t('.success') if @answer.save
   end
 
   def destroy
     authorize answer
 
     answer.destroy
-    flash.now[:notice] = 'Answer was successfully deleted'
+    flash.now[:notice] = t('.success')
   end
 
   def update
     authorize answer
     answer.update(answer_params)
-    flash.now[:notice] = 'The answer was updated successfully.'
+    flash.now[:notice] = t('.success')
 
     @answer = answer
   end
