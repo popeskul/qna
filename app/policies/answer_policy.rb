@@ -7,14 +7,14 @@ class AnswerPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user == record.author
+    user.id == record.author_id if user
   end
 
   def update?
-    user == record.author
+    user&.id == record.author_id if user
   end
 
   def set_as_the_best?
-    user == record.question.author
+    user.id == record.question.author_id if user
   end
 end

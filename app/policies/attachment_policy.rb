@@ -3,7 +3,7 @@
 # AttachmentPolicy
 class AttachmentPolicy < ApplicationPolicy
   def destroy?
-    user == record.author
+    user.id == record.author_id if user
   end
 
   def create?

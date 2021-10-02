@@ -11,11 +11,11 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def update?
-    user == record.author
+    user.id == record.author_id if user
   end
 
   def destroy?
-    user == record.author
+    user.id == record.author_id if user
   end
 
   def comment?
@@ -23,6 +23,6 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def vote?
-    user && user != record.author
+    user.id != record.author_id if user
   end
 end

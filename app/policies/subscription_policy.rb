@@ -8,6 +8,6 @@ class SubscriptionPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user == record.user
+    user.id == record.user_id if user
   end
 end
