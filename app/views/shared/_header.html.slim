@@ -21,3 +21,6 @@ header
               = link_to t('.enter'), new_user_session_path, class: 'nav-link'
             li.nav-item
               = link_to t('.registration'), new_user_registration_path, class: 'nav-link'
+        ul.navbar-nav.align-items-center.mb-2.mb-lg-0
+          li.nav-item
+            = render 'search/form'
