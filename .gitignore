@@ -13,6 +13,9 @@ config/secrets.yml
 
 coverage/
 
+*.sphinx.conf
+db/sphinx
+
 /dump.rdb
 
 # Ignore all logfiles and tempfiles.
