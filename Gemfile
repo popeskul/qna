@@ -17,7 +17,8 @@ gem 'gon'
 gem 'handlebars_assets'
 gem 'jbuilder', '~> 2.7'
 gem 'letter_opener'
-gem 'mysql2', '~> 0.4', :platform => :ruby
+gem 'mini_racer'
+gem 'mysql2'
 gem 'oj'
 gem 'omniauth'
 gem 'omniauth-facebook'
@@ -40,6 +41,13 @@ gem 'whenever', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-sidekiq'
+  gem 'capistrano3-unicorn', require: false
   gem 'database_cleaner'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
