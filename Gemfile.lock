@@ -512,6 +512,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4)
   rails-controller-testing
+  rake
   rspec-rails (~> 5.0.0)
   rubocop
   sass-rails (>= 6)
