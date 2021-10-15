@@ -1,5 +1,5 @@
 server "159.65.198.28", user: "deployer", roles: %w{app db web}, primary: true
-set :rail_env, :production
+set :rails_env, :production
 set :branch, 'main'
 
 set :ssh_options, {
