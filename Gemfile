@@ -37,6 +37,7 @@ gem 'sinatra', require: false
 gem 'slim-rails'
 gem 'thinking-sphinx', '~> 5.3'
 gem 'turbolinks', '~> 5'
+gem 'unicorn'
 gem 'webpacker', '~> 5.0'
 gem 'whenever', require: false
 
@@ -60,6 +61,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'capistrano3-unicorn', require: false
   gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'spring'

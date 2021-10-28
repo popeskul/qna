@@ -13,3 +13,5 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 set :pty, false
 
 set :rvm_ruby_version, "2.7.3@#{fetch(:application)}"
+
+after 'deploy:publishing', 'unicorn:restart'
