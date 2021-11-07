@@ -1,57 +1,59 @@
 .question
-  .mb-4
-    - if policy(question).vote?
-      = render 'votes/vote', resource: question
+  - cache question do
+    .mb-4
+      - if policy(question).vote?
+        = render 'votes/vote', resource: question
 
-    .h3.mb-3 = question.title
-    .h4.mb-3 = question.body
-    - if question.files.attached?
-      = render 'shared/attachments', resource: question, current_user: current_user
+      .h3.mb-3 = question.title
+      .h4.mb-3 = question.body
+      - if question.files.attached?
+        = render 'shared/attachments', resource: question, current_user: current_user
 
-    - if policy(Subscription).create?
-      .subscription
-        = render 'subscriptions/subscription', resource: question
+      - if policy(Subscription).create?
+        .subscription
+          = render 'subscriptions/subscription', resource: question
 
-    .links.mb-3
-      p = "#{t('.links')}:"
-      ul
-        - question.links.each do |link|
-          = render link
+      .links.mb-3
+        p = "#{t('.links')}:"
+        ul
+          - question.links.each do |link|
+            = render link
 
-  .answer-errors
-    = render 'shared/errors', resource: @answer
+    .answer-errors
+      = render 'shared/errors', resource: @answer
 
-  .comment_errors
-    = render 'shared/errors', resource: @comment
+    .comment_errors
+      = render 'shared/errors', resource: @comment
 
-  .question-comments
-    | #{t('.question_comments')}:
-    .question-comments-list
-      = render question.comments
-    = render 'comments/form', commentable: question
+    .question-comments
+      | #{t('.question_comments')}:
+      .question-comments-list
+        = render question.comments
+      = render 'comments/form', commentable: question
 
-    - if policy(question).comment?
+      - if policy(question).comment?
+        .mb-3
+          = link_to t('.add_comment'), '', class: 'button-question-comment btn btn-info', data: { question_id: question.id }
+
+    - if policy(question).destroy?
       .mb-3
-        = link_to t('.add_comment'), '', class: 'button-question-comment btn btn-info', data: { question_id: question.id }
+        = link_to t('.delete_question'), question_path(question), method: :delete, class: 'btn btn-outline-danger'
 
-  - if policy(question).destroy?
-    .mb-3
-      = link_to t('.delete_question'), question_path(question), method: :delete, class: 'btn btn-outline-danger'
+    table.table.table-sm.table-borderless.answers
+      thead
+        tr
+          th = t('.table.answer')
+          th = t('.table.files')
+          th = t('.table.links')
+          th = t('.table.action')
+      tbody
+        = render question.answers, current_user: current_user
 
-  table.table.table-sm.table-borderless.answers
-    thead
-      tr
-        th = t('.table.answer')
-        th = t('.table.files')
-        th = t('.table.links')
-        th = t('.table.action')
-    tbody
-      = render question.answers, current_user: current_user
+
+    = javascript_pack_tag 'utilities/answers.js'
+    = javascript_pack_tag 'utilities/questions.js'
+    = javascript_pack_tag 'utilities/comments.js'
+    = javascript_pack_tag 'utilities/votes.js'
 
   - if policy(Answer).create?
     = render 'answers/form', question: question, answer: @answer
-
-= javascript_pack_tag 'utilities/answers.js'
-= javascript_pack_tag 'utilities/questions.js'
-= javascript_pack_tag 'utilities/comments.js'
-= javascript_pack_tag 'utilities/votes.js'

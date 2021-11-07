@@ -65,10 +65,6 @@ ActiveRecord::Schema.define(version: 2021_10_01_154518) do
     t.index ["user_id"], name: "index_authorizations_on_user_id"
   end
 
-  create_table "categories", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 25, null: false
-  end
-
   create_table "comments", force: :cascade do |t|
     t.text "body", null: false
     t.bigint "user_id"
@@ -158,12 +154,6 @@ ActiveRecord::Schema.define(version: 2021_10_01_154518) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_subscriptions_on_question_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
-  end
-
-  create_table "tests", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 50, null: false
-    t.integer "category_id"
-    t.integer "level"
   end
 
   create_table "users", force: :cascade do |t|
