@@ -1,48 +1,49 @@
 - if answer.persisted?
-  = content_tag(:tr, id: "answer-#{answer.id}", class: 'answer', data: { answer_id: answer.id })
-    td
-      = render 'votes/vote', resource: answer
+  - cache answer do
+    = content_tag(:tr, id: "answer-#{answer.id}", class: 'answer', data: { answer_id: answer.id })
+      td
+        = render 'votes/vote', resource: answer
 
-      span.p-2 = answer.body
-      - if answer.best?
-        p The best answer
-      - if current_user&.author_of?(answer) && !answer.best?
-        p = link_to t('.button.mark_as_the_best'), set_as_the_best_answer_path(answer), class: 'answer-best', method: :post, remote: true
+        span.p-2 = answer.body
+        - if answer.best?
+          p The best answer
+        - if current_user&.author_of?(answer) && !answer.best?
+          p = link_to t('.button.mark_as_the_best'), set_as_the_best_answer_path(answer), class: 'answer-best', method: :post, remote: true
 
-        = link_to t('.button.edit'), '', class: 'edit-answer-link btn btn-link', data: { answer_id: answer.id }
+          = link_to t('.button.edit'), '', class: 'edit-answer-link btn btn-link', data: { answer_id: answer.id }
 
-        = form_with model: answer, remote: true, local: false, html: { id: "edit-answer-#{answer.id}", class: 'edit-answer d-none mt-3' } do |f|
-          .input-group.mb-3
-            = f.label :body, class: 'input-group-text'
-            = f.text_area :body, class: 'form-control'
-          .input-group.mb-3
-            = f.label :files, class: 'input-group-text'
-            = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
-          .mb-3
-            = render 'links/form', form: f
-          .mb-3
-          = f.submit class: 'btn btn-primary'
+          = form_with model: answer, remote: true, local: false, html: { id: "edit-answer-#{answer.id}", class: 'edit-answer d-none mt-3' } do |f|
+            .input-group.mb-3
+              = f.label :body, class: 'input-group-text'
+              = f.text_area :body, class: 'form-control'
+            .input-group.mb-3
+              = f.label :files, class: 'input-group-text'
+              = f.file_field :files, multiple: true, direct_upload: true, class: 'form-control'
+            .mb-3
+              = render 'links/form', form: f
+            .mb-3
+            = f.submit class: 'btn btn-primary'
 
-      .answer-comments.mb-4
-        | Answer Comments:
-        .answer-comments-list data-answer-comments-list=answer.id
-          = render answer.comments
-        = render 'comments/form', commentable: answer
+        .answer-comments.mb-4
+          | Answer Comments:
+          .answer-comments-list data-answer-comments-list=answer.id
+            = render answer.comments
+          = render 'comments/form', commentable: answer
 
-        - if current_user
-          = link_to t('.button.add_comment'), '', class: 'button-answer-comment btn btn-info', data: { answer_id: answer.id }
-    td
-      - if answer.files.attached?
-        .files.mb-3
-          p Files:
-          = render 'shared/attachments', resource: answer, current_user: current_user
-    td
-      - unless answer.links.empty?
-        .links.mb-3
-          p Links:
-          ul
-            - answer.links.each do |link|
-              = render link
-    td
-      - if current_user&.author_of?(answer)
-        = link_to t('.button.delete'), answer_path(answer), method: :delete, remote: true, local: false, class: "link-danger delete-answer"
+          - if current_user
+            = link_to t('.button.add_comment'), '', class: 'button-answer-comment btn btn-info', data: { answer_id: answer.id }
+      td
+        - if answer.files.attached?
+          .files.mb-3
+            p Files:
+            = render 'shared/attachments', resource: answer, current_user: current_user
+      td
+        - unless answer.links.empty?
+          .links.mb-3
+            p Links:
+            ul
+              - answer.links.each do |link|
+                = render link
+      td
+        - if current_user&.author_of?(answer)
+          = link_to t('.button.delete'), answer_path(answer), method: :delete, remote: true, local: false, class: "link-danger delete-answer"
